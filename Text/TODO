@@ -1,0 +1,47 @@
+Hauptteil
+------------------
+- Einleitung: Voraussetzungen des Lax-Milgram-Lemmas erwähnen
+- Interpolation vom Clement typ -> d=2 auf d=3 erweitern
+- Auf Verfürth eingehen, A Posteriori resultate in Kontext einordnen
+- auf isotrope materialien eingehen
+- stimmt definition zu h_E?
+- plots updaten
+- Quellen: Alberty, Braess, Gedicke
+- einheitliche Zitate
+- Zitate ausbauen
+- Pagebreaks, overfullboxes
+- Layout: Seitenangaben und mehr
+- einheitlich sigma:epsilon
+- d=2 vorraussetzung im a priori teil
+- Einleitung Existenz und Eindeutigkeit: Seitenverweise bei Zitationen
+- was wurde von a beim residualen Fehlerschätzer konkret verwendet?
+- argumentation mit stetigkeit an der naht ein wenig fishy
+- Unterhalbstetigkeit sehr unklar.
+- Zitation: Formulierung als Kräftegleichgewicht. -> Duvaut, S.3
+- date on title page
+
+Programmierung
+------------------
+- Implementiere 3D
+- Säubere Code
+- Auskommentieren
+- Zitationen
+
+Schedule
+------------------
+- bis 30: fertig, Code auskommentieren, Code aufräumen
+
+Korrekturlesen
+------------------
+- Titelseite: 1x
+- Inhaltsverzeichnis: 2x
+- Kapitel 1: 2x
+- Kapitel 2: 2x
+- Kapitel 3: 1x -> S.15
+- Kapitel 4: 2x
+- Kapitel 5: 2x
+- Kapitel 6: 2x
+- Kapitel 7: 2x
+- Kapitel 8: 2x
+- Symbolverzeichnis: 2x
+- Literaturangaben: 2x

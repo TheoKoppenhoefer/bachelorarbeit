@@ -1,0 +1,1498 @@
+
+\documentclass{scrartcl}
+% alternative article or report
+
+
+%%%%% PACKAGES
+
+% small tweaks and nicer typography
+\usepackage{microtype}
+
+% changes language to German
+% gives proper date, and correct hyphenation
+\usepackage[ngerman]{babel}
+
+% basic math stuff
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+%\usepackage{tikz-cd}
+
+% tikz
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{babel}
+\tikzset{>=stealth}
+
+\newcommand{\tikzmark}[3][]{\tikz[remember picture,baseline] \node [anchor=base,#1](#2) {$#3$};}
+
+% title page
+\usepackage{BA_Titelseite}
+
+%%%%% CONFIGURATION
+
+% prevents automatic line breaks inside of equations
+% since it looks bad
+\binoppenalty = \maxdimen
+\relpenalty   = \maxdimen
+
+% theorem-like environments
+\newcounter{everything}
+\newtheorem{corollary}[everything]{Korollar}
+\newtheorem{lemma}[everything]{Lemma}
+\newtheorem{proposition}[everything]{Proposition}
+\newtheorem{theorem}[everything]{Satz}
+
+
+%%%%% CUSTOM COMMANDS
+
+% real numbers via \R
+% complex numbers via \C
+% general field via \K
+\def\C{\mathbb{C}}
+\def\R{\mathbb{R}}
+\def\K{\mathbb{K}}
+\def\Q{\mathbb{Q}}
+\def\Z{\mathbb{Z}}
+\def\N{\mathbb{N}}
+\def\H{\mathbb{H}}
+\def\e{\varepsilon}
+\def\ev{e}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\bA}{\mathbb{A}}
+\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bE}{\mathbb{E}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bG}{\mathbb{G}}
+\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bI}{\mathbb{I}}
+\newcommand{\bJ}{\mathbb{J}}
+\newcommand{\bK}{\mathbb{K}}
+\newcommand{\bL}{\mathbb{L}}
+\newcommand{\bM}{\mathbb{M}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bO}{\mathbb{O}}
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bU}{\mathbb{U}}
+\newcommand{\bV}{\mathbb{V}}
+\newcommand{\bW}{\mathbb{W}}
+\newcommand{\bX}{\mathbb{X}}
+\newcommand{\bY}{\mathbb{Y}}
+\newcommand{\bZ}{\mathbb{Z}}
+
+\newcommand{\hu}{\hat{u}}
+\newcommand{\hv}{\hat{v}}
+\newcommand{\hA}{\hat{A}}
+\newcommand{\hC}{\hat{C}}
+\newcommand{\hR}{\hat{R}}
+\newcommand{\hV}{\hat{V}}
+\newcommand{\hw}{\hat{w}}
+\newcommand{\hb}{\hat{b}}
+
+
+\newcommand{\tiS}{\tilde{S}}
+\newcommand{\tiu}{\tilde{u}}
+\newcommand{\tih}{\tilde{h}}
+\newcommand{\tie}{\tilde{\varepsilon}}
+\newcommand{\tisigma}{\tilde{\sigma}}
+
+\newcommand{\dif}[1]{\,\mathrm{d} #1}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\bnorm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\vii}[2]{\ensuremath{\begin{bmatrix}#1 \\ #2 \end{bmatrix}}}
+\newcommand{\mii}[4]{\ensuremath{\begin{bmatrix}#1&#2 \\ #3&#4 \end{bmatrix}}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+
+
+%%%%%%%%%%    Math operators    %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareMathOperator{\Id}{Id}             % identity morphism
+% \DeclareMathOperator{\ker}{ker}           % kernel
+\DeclareMathOperator{\rg}{rg}             % image
+\DeclareMathOperator{\defekt}{def}             % defect
+\DeclareMathOperator{\im}{im}             % image
+\DeclareMathOperator{\Hom}{Hom}           % homomorphisms
+\DeclareMathOperator{\End}{End}           % endomorphisms
+\DeclareMathOperator{\Span}{Span}         % linear span
+\DeclareMathOperator{\grad}{\nabla}         % gradient
+\DeclareMathOperator{\Tr}{Tr}       	  % trace
+\DeclareMathOperator{\diver}{Div}			% divergence
+\DeclareMathOperator{\supp}{supp}			% support
+\DeclareMathOperator{\dist}{dist}			% distance
+\DeclareMathOperator{\inter}{int}			% interiour
+
+% inner product (scalar product) via \inner{v, w}
+% norm via \norm{x}
+% absolute value via \abs{x}
+% use the star-version for automatic scaling
+\DeclarePairedDelimiter{\abs}{|}{|}
+\DeclarePairedDelimiter{\inner}{\langle}{\rangle}
+
+% \vect{ x // y // z } for a column vector with entries x, y, z
+% similarly for larger vectors
+% in this code:  1 = number of arguments
+%               #1 = first argument
+\newcommand{\vect}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+
+
+% \conj{z} for complex conjugation
+\newcommand{\conj}{\overline}
+
+
+
+%%%%% TITLE PAGE %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Namen des Verfassers der Arbeit
+\author{Theo Koppenhöfer}
+%Geburtsdatum des Verfassers
+\geburtsdatum{9. November 2000}
+%Gebortsort des Verfassers
+\geburtsort{Heidelberg}
+%Datum der Abgabe der Arbeit
+\date{\today}
+
+%Name des Betreuers
+% z.B.: Prof. Dr. Peter Koepke
+\betreuer{Betreuer: Prof. Dr. Joscha Gedicke}
+%Name des Zweitgutachters
+\zweitgutachter{Zweitgutachter: Prof. Dr. X Y}
+%Name des Instituts an dem der Betreuer der Arbeit tätig ist.
+%z.B.: Mathematisches Institut
+%\institut{Mathematisches Institut}
+%\institut{Institut f\"ur Angewandte Mathematik}
+\institut{Institut f\"ur Numerische Simulation}
+%\institut{Forschungsinstitut f\"ur Diskrete Mathematik}
+%Titel der Bachelorarbeit
+\title{Adaptive Finite Elemente für Lineare Elastizität}
+%Do not change!
+\ausarbeitungstyp{Bachelorarbeit Mathematik}
+
+
+%%%%% The content starts here %%%%%%%%%%%%%
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+Zunächst beginnen wir mit einer Liste an Bezeichnungen.
+Zur Notation: Im folgenden werden bei Summen der Übersichtlichkeit halber die Grenzen weggelassen. Die Menge der Indizes, über die sich die Summe erstreckt wird als maximal angenommen.
+
+
+\section{Einleitung}
+\subsubsection*{Verzerrung, Geometrische Betrachtungen}
+
+Da der Körper sich im Kräftegleichgewicht befindet, verschwindet auch das gesamte Drehmoment in einem geeigneten Gebiet $\omega\subseteq\Omega$ für $d=3$ und es folgt wieder mit dem Satz von Gauss
+\begin{align*}
+	0 &= \int_\omega \left(x\times f\right)_i\dif x + \int_{\partial\omega}\left(x\times\sigma n\right)_i\dif x \\
+	&=\int_\omega \left(x\times f\right)_i\dif x + \int_{\partial\omega}\sum_{k,j,l}\epsilon_{ijk}x_j\sigma_{kl}n_l\dif x \\ \\
+	&\tikzmark{gaussdrehimp}{=}\int_\omega \left(x\times f\right)_i\dif x + \int_{\omega}\sum_{j,k,l}\partial_l\epsilon_{ijk}x_j\sigma_{kl}n_l\dif x \\
+	&=\int_\omega \left(x\times f\right)_i\dif x + \int_{\omega}\sum_{j,k,l}\left(\epsilon_{ijk}x_j\partial_l\sigma_{kl}+\epsilon_{ijk}\delta_{lj}\sigma_{kl}\right)\dif x \\
+	&=\int_\omega \left(x\times f\right)_i\dif x + \int_{\omega}\left(x\times \diver\sigma \right)_i\dif x+\int_\omega\sum_{j,k}\epsilon_{ijk}\sigma_{kj}\dif x \\
+	&= \int_\omega\sum_{j,k}\epsilon_{ijk}\sigma_{kj}\dif x
+\end{align*}
+\begin{tikzpicture}[remember picture, overlay, node distance = 0.6cm]
+	\node[,text width=5cm] (gaussdrehimpdescr) [above right= of gaussdrehimp]{Satz von Gauss};
+	\draw[,->,thick] (gaussdrehimpdescr) to [in=90,out=180] (gaussdrehimp);
+\end{tikzpicture}
+
+
+Hierbei bezeichnet $\epsilon_{ijk}$ den $\epsilon$-Tensor, der dadurch definiert ist, dass er in $ijk$ total antisymmetrisch ist und mit $\epsilon_{123}=1$ normiert ist. Da dies für alle $\omega\subseteq\Omega$ regulär genug gilt, folgt
+\begin{align*}
+	0=\sum_{j,k}\epsilon_{ijk}\sigma_{kj}
+\end{align*}
+Also
+\begin{align*}
+	0 &= \sum_{j,k}\epsilon_{1jk}\sigma_{kj} = \sigma_{32}-\sigma_{23} \\
+	0 &= \sum_{j,k}\epsilon_{2jk}\sigma_{kj} = \sigma_{13}-\sigma_{31} \\
+	0 &= \sum_{j,k}\epsilon_{3jk}\sigma_{kj} = \sigma_{21}-\sigma_{12} \\
+\end{align*}
+und damit $\sigma_{ij}=\sigma_{ji}$, also ist $\sigma$ symmetrisch.
+
+TODO:
+Verzerrungsdichte (strain density)
+Nansons Formel:
+\begin{align*}
+	Mu\times Mv=(\det M)M^{-T}(u\times v)
+\end{align*}
+
+\subsubsection*{Stress}
+
+TODO: Konsistente Notation, int f auf andere Seite der Gleichung.
+
+TODO: Man kann auch gleitende Randbedingungen haben, mit $M$ und $\Gamma_N$ und $\Gamma_D$ nicht notwendigerweise disjunkt.
+
+TODO: muss nicht noch eine Annahme in $i$ getroffen werden?
+
+
+Für ein Cauchy-Material (Cauchy elastic material, check name) gilt das materialabhängige Gesetz
+\begin{align*}
+	t_{ij}(x) = \sigma(x,\partial v)
+\end{align*}
+(this makes notationally absolutely no sense)
+
+
+\subsubsection*{Materialgesetze}
+\begin{align*}
+	f
+	&= -\sum_{i,j}\partial_j\sigma_{ij}e_i \\
+	&= -\sum_{i,j}\partial_j\left(\lambda\Tr(\e)\delta_{ij}+2\mu\e_{ij}\right)e_i \\
+	&= -\sum_{i,j,k}\partial_j\left(\lambda\e_{kk}\delta_{ij}+2\mu\e_{ij}\right)e_i \\
+	&= -\sum_{i,j,k}\left(\lambda(\partial_j\e_{kk})\delta_{ij}+2\mu\partial_j\e_{ij}\right)e_i \\
+	&= -\sum_{i,j,k}\left(\lambda(\partial_i\partial_ku)+2\mu\partial_j\e_{ij}\right)e_i \\
+	&= -\lambda\grad\diver u-2\mu \diver\e(u)
+\end{align*}
+Was uns zur Lamé Differenzialgleichung führt
+\begin{align*}
+	-\lambda\grad\diver u-2\mu\diver\e(u) &= f &&\text{ auf }\Omega \\
+	u&= w &&\text{ auf }\Gamma_D \\
+	\sigma(u)\, n &= g &&\text{ auf }\Gamma_N \\
+\end{align*}
+TODO: Wie folgen die Symmetriebeziehungen genau?
+
+\subsubsection*{St. Venant-Kirchhoff-Material}
+
+
+TODO: (es folgt in Lip eine argumentation mit Energie und minimum, woraus folgt, dass K>0 und mu>0).
+Es gilt in der physik $K\geq0$ und $\mu\geq0$, woraus folgt
+
+
+Beziehungsweise erhalten wir die DGL (nach \cite{Alb-2002})
+\begin{align*}
+	(\lambda+\mu)(\grad\diver u)^\top + \mu\Delta u &= f \\
+	M\cdot u&= w \text{ auf }\Gamma_D\\
+	\sigma(u)\cdot n &= g \\
+\end{align*}
+
+
+TODO: Im folgenden Fokus weniger auf $K$ und mehr auf $E$, $\nu$, $\lambda$ und $\mu$ -> versuche $E$ aus Experimenten zu entfernen
+
+Wegen
+\begin{align*}
+	\Tr(\e) &= \Tr\left(\frac{1}{2}\left(\nabla u+\nabla u^\top\right)\right) \\
+	&= \frac{1}{2}\left(\Tr\left(\nabla u\right)+\Tr\left(\nabla u^\top\right)\right) \\
+	&= \Tr\left(\nabla u\right) \\
+\end{align*}
+können wir $\Tr(\e)$ als Volumenänderung der Deformation interpretieren (TODO: Das ist nicht offensichtlich). Falls $\e$ spurfrei ist, also $\Tr(\e)=0$, hat die von $\e$ hervorgebrachte Deformation keine Volumenänderung zur Folge und wir bezeichnen sie als reine Scherung.
+Wir können die lineare Verzerrung in einen reinen Scheranteil (engl. pure shear) und einen reinen Kompressionsanteil (pure compression) (nach \cite{Lif-1959}) zerlegen
+\begin{align*}
+	\e=(\e-\frac{1}{d}\Tr(\e)\Id)+\frac{1}{d}\Tr(\e)\Id
+\end{align*}
+Es folgt für den Cauchy Tensor
+\begin{align*}
+	\sigma &= \lambda\Tr(\e)\Id+2\mu\e \\
+	&= (\lambda+\frac{2\mu}{d})\Tr(\e)\Id+2\mu(\e-\frac{1}{d}\Tr(\e)\Id) \\
+	&= K\Tr(\e)\Id+2\mu(\e-\frac{1}{d}\Tr(\e)\Id)
+\end{align*}
+Wobei wir das Kompressionsmdul $K$ ('Modulus of (hydrstatic) compression / rigidity under compression') durch 
+\begin{align*}
+	K = \lambda+\frac{2\mu}{d}
+\end{align*}
+definiert haben. Ist $\e$ ein pure compression, so ist
+\begin{align*}
+	\sigma = K\Tr(\e)\Id
+\end{align*}
+Komprimieren wir das Material in der $x_1$-Richtung, sagen wir mit $\e_{ij}=-\delta_{i1}\delta_{j1}$, so müssen die induzierten Oberflächenkräfte in diesselbe Richtung zeigen, also muss auch $\sigma_{11}<0$. Damit folgt aber für ein physikalisches Material $K>0$. Analog (oder wie in Lip mit der Energie) kann man argumentieren, dass $\mu>0$. Hiermit folgt
+\begin{align*}
+	\sum_{i,j}\sigma_{ij}\e_{ij}\geq0
+\end{align*}
+
+In \cite{Lif-1959}, S.13 wird die Bedeutung von $\nu$ und $E$ diskutiert.
+
+Anwendung von $\Tr$ liefert (vgl. mit Braess)
+\begin{align*}
+	&\Tr(\sigma)=d\cdot\lambda\Tr(\e)+2\mu\Tr(\e)=(d\cdot\lambda+2\mu)\Tr(\e) \\
+	&\implies \Tr(\e) = \frac{1}{d\cdot\lambda+2\mu}\Tr(\sigma)
+\end{align*}
+und wir erhalten
+\begin{align*}
+	\e
+	&=\frac{1}{2\mu}\left(\sigma-\lambda\Tr(\e)\Id\right) \\
+	&=\frac{1}{2\mu}\left(\sigma-\frac{\lambda}{d\cdot\lambda+2\mu}\Tr(\sigma)\Id\right) \\
+	&= \frac{1}{2\mu}\sigma-\frac{\lambda}{2\mu(d\cdot\lambda+2\mu)}\Tr(\sigma)\Id \\
+	&= \frac{1+\nu}{E}\sigma-\frac{\nu}{E}\Tr(\sigma)\Id
+\end{align*}
+wobei wir das Elastizitätsmodul $E$ (Youngs modulus) durch
+\begin{align*}
+	\frac{1}{E}=\frac{\lambda+\mu}{\mu(d\cdot\lambda+2\mu)}
+\end{align*}
+und die Querkontraktion $\nu\in[-1,\frac{1}{2}]$ (nach \cite{Lif-1959}, TODO: stimmt das?) (Possons ration) durch 
+\begin{align*}
+	\nu = \frac{\lambda}{2(\lambda+\mu)}	
+\end{align*}
+definieren.
+Üben wir Druck an einem Ende eines Stabes in $x_1$-Richtung (dieses Beispiel ist aus Lifschitz und wahrscheinlich auch die Motivation für diese Definition) aus, also $\sigma_{ij} = \delta_{1i}\delta_{1j}$, so haben wir
+\begin{align*}
+	\e_{ij} = \frac{1+\nu}{E}\delta_{i1}\delta_{j1}-\frac{\nu}{E}\Tr(\sigma)\delta_{ij}
+	= \frac{1+\nu}{E}\delta_{i1}\delta_{j1}-\frac{\nu}{E}\delta_{ij}
+\end{align*}
+Also hängt die Verformung in $x_1$ Richtung
+\begin{align*}
+	\partial_1u_1 = \e_{11}=\frac{1}{E}
+\end{align*}
+reziprok von $E$ ab und die Verformung in $x_i$-Richtung mit $i\neq1$
+\begin{align*}
+	\partial_iu_i = \e_{ii}=-\frac{\nu}{E}=-\nu\partial_1u_1
+\end{align*}
+über den Parameter $\nu$ von der Verformung in $x_1$-Richtung ab.
+
+TODO: Füge ein Bild hinzu, gehe auf Beispiel ein
+
+
+
+Man kann auch die Kräfte betrachten, die durch eine Volumenänderung verursacht werden.
+Das folgende Beispiel ist aus Lifschitz.
+Nun betrachten wir einen Körper, der hydrostatische Kompression erfährt. Der Körper erfährt also von allen Seiten eine Kraft mit derselben Stärke $p$. Der Stresstensor ist also gegeben durch
+\begin{align*}
+	\sigma^K _{ij} = p\delta_{ij}
+\end{align*}
+Wir wollen nun einen Ausdruck für $p$ in Abhängigkeit von $u$ finden. 
+für eine Konstante $c$. 
+Aus der Physik (Compressibility,Bulk modulus,Boyles law TODO: Welches ist es?) wissen wir, dass $p$ annähernd proportional zur Volumenänderung durch die Verschiebung $u$ ist. Die Verformung ändert das Volumen um den Faktor $\det(\nabla\chi)=\det(\Id+\nabla u)\approx 1+\Tr(\nabla u)$ für eine kleines $\nabla u$. Die Verschiebung $u$ verändert das Volumen also um ungefähr
+\begin{align*}
+	\Tr\left(\nabla u\right)
+	&= \frac{1}{2}\left(\Tr\left(\nabla u\right)+\Tr\left(\nabla u^\top\right)\right) \\
+	&= \Tr\left(\frac{1}{2}\left(\nabla u+\nabla u^\top\right)\right) \\
+	&= \Tr(\e(u))
+\end{align*}
+Damit ergibt sich
+\begin{align*}
+	\sigma^K _{ij} \approx \lambda\Tr(\e(u))\delta_{ij}
+\end{align*}
+für eine Konstante $\lambda\in\R$.
+
+\subsubsection*{Energiebetrachtungen}
+
+TODO: Einheitliche Notation $\sigma:\e$ oder $\e:\sigma$
+
+TODO: Energiebetrachtungsproof
+
+Wir betrachten die Arbeit, die durch eine kleine Änderung der Verschiebung $u\to u+\delta u$ ($\norm{\delta u}$ klein) von den internen Kräften verrichtet wird. Gemäß der Formel $\text{Arbeit}=\text{Kraft}\cdot\text{Weg}$ erhält man für die Energie-/Arbeitsdichte $w$
+\begin{align*}
+	\delta w = f\cdot \delta v
+	= \sum_{i,j} \partial_i\sigma_{ij}\delta v_j
+\end{align*}
+und nach Integration und Anwendung von Gauss
+\begin{align*}
+	\int_\omega w\dif x
+	&= \int_\omega\sum_{i,j} \partial_i\sigma_{ij}\delta u_j\dif x \\
+	&= \underbrace{\int_{\partial\omega}\sum_{i,j} \sigma_{ij}\delta u_jn_i\dif x}_{\to0, \text{für }\omega\text{ groß genug }}-\int_\omega\sum_{i,j} \sigma_{ij}\partial_i\delta u_j\dif x \\
+	&= -\frac{1}{2}\int_\omega\sum_{i,j}\sigma_{ij}\left(\partial_i\delta u_j+\partial_j\delta u_i\right)\dif x \\
+	&= -\frac{1}{2}\int_\omega\sum_{i,j}\sigma_{ij}\e_{ij}\dif x
+\end{align*}
+Dies motiviert
+\begin{align*}
+	\delta w=-\frac{1}{2}\sum_{ij}\sigma_{ij}\delta \e_{ij}
+\end{align*}
+zu setzen. Nach (\cite{Lif-1959}, S.12), haben wir $\partial_{\e_{ij}}w =\sigma_{ij}$ und deshalb $w=\frac{1}{2}\sum_{ij}\sigma_{ij}\e_{ij}$ (Argumentation gilt auch für nichtlinearen Fall).
+
+
+(Das folgdende ist etwas komisch) Es gibt 2 unabhängige Scalare 2. Ordnung, die aus $\e$ hervorgehen, nämlich $\sum_i\e_{ii}^2$ und $\sum_{ij}\e_{ij}^2$
+Nun Taylorn wir $w$ in $0$ bis zur 2. Ordnung und erhalten
+\begin{align*}
+	w=w_0+\frac{1}{2}\lambda\sum_i\e_{ii}^2+\mu\sum_{ij}\e_{ij}^2
+\end{align*}
+wobei die Terme erster Ordnung verschwinden, da $0=\sigma_{ij}|_{u=0}=\partial_{\e_{ij}}w\vert_{\e=0}$
+Bei pure shear (\cite{Lif-1959}, S.10) ist $\Tr(\e)=0$ und bei hydrostatic compression $\e_{ij}=c\delta_{ij}$. Jede Deformation lässt sich durch
+\begin{align*}
+	\e_{ij}=(\e_{ij}-\frac{1}{d}\delta_{ij}\Tr(\e))+\frac{1}{3}\delta_{ij}\Tr(\e)
+\end{align*}
+in pure shear und hydrostatic compression zerlegen. Einsetzen in $w$ liefert
+\begin{align*}
+	w = \sum_{i,j,k}\mu(\e_{ij}-\frac{1}{3}\e_{kk}\delta_{ij})^2+\frac{1}{2}K\e_{kk}^2
+\end{align*}
+Außerdem erhält man
+\begin{align*}
+	\sigma_{ij}=K\Tr(\e)\delta_{ij}+2\mu(\e_{ij}-\frac{1}{d}\Tr(\e)\delta_{ij})
+\end{align*}
+Sowie für die Volumenänderung $dK\Tr(\e)=\Tr(\sigma)$. In \cite{Lif-1959}, S.13 wird die Bedeutung von $\nu$ und $E$ diskutiert.
+
+Außerdem definieren wir (stored energy function)
+\begin{align*}
+	w(\e)\coloneqq \frac{1}{2}\e\colon C\e\coloneqq \frac{1}{2}\sum_{i,j,k,l}C_{ijkl}\e_{ij}\e_{kl}
+\end{align*}
+und nehmen an, dass $b\in V^*$ gegeben ist, dass uns die Arbeit liefert, welche von einer Verschiebung $v\in V$ auf unser Objekt ausgeübt wird. Damit können wir die potentielle Energie einer Verschiebung $v\in V$ definieren
+\begin{align*}
+	W(v)=\int_\Omega w(\e(v))\dif x- b(v)
+\end{align*}
+
+
+\begin{proposition}
+	Es gilt
+	\begin{align*}
+		\partial_vW(u)=a(u,v)-\ell(v)
+	\end{align*}
+\end{proposition}
+\begin{proof}
+	Man rechnet
+	\begin{align*}
+		&\frac{1}{\theta}\left(W(u+\theta v) -W(u)\right) \\
+		&= \frac{1}{\theta}\left(\frac{1}{2}a(u+\theta v,u+\theta v)-\ell(u+\theta v)-\frac{1}{2}a(u,u)-\ell(u)\right) \\
+		&= \frac{1}{\theta}\left(\theta a(u,v)+\frac{1}{2}\theta^2a(v,v)-\theta \ell(v)\right) \\
+		&= a(u,v)-\ell(v)+\frac{1}{2}\theta a(v,v) \\
+		&\xrightarrow{\theta\to0} a(u,v)-\ell(v)
+	\end{align*}
+\end{proof}
+
+Für St. Vernant-Kirchhoff Materialien ergibt sich die Energiedichte zu
+\begin{align*}
+	w = \frac{\lambda}{2}(\Tr(E))^2+\mu\Tr(\nabla u^\top\nabla u)
+\end{align*}
+
+\section{Existenz (und Eindeutigkeit?)}
+
+\subsubsection*{Lax-Milgram lemma}
+
+\subsubsection*{Grundlegende Bezeichnungen}
+
+
+TODO: Definiere eine Domain
+
+Wir definieren $H^k$($k\in\Z$) 
+
+%Wir bezeichnen die Menge aller stetigen Abbildungen $f\colon V\to W$ mit $C(V,W)$ (Was sind zulässige V und W).
+Gegeben sei ein Banachraum $V$. Wir definieren den Dualraum als $V^*\coloneqq C(V,\R)$.
+
+TODO: definiere mehr dualitätsgedöns
+
+
+%Sei $V$,$W$ normierte Räume und $T\colon V\to W$ eine stetige Lineare Abbildung. Es wird durch die Beziehung
+%\begin{align*}
+%	T^*(w^*) = w^*\circ T
+%\end{align*}
+%eine duale Abbildung $T^*\colon W^*\to V^*$ definiert. Nach (Conti) ist sie linear und stetig. Falls es sich bei $V$ und $W$ um Hilbert-Räume handelt, schreiben wir (genauer!) $T^\dagger$.
+%
+%TODO: definiere mehr dualitätsgedöns
+
+\subsection*{Kornsche Ungleichungen}
+
+\subsubsection*{Lemma von J.L. Lions}
+
+\subsubsection*{Lemma von J.L. Lions}
+
+
+Wir definieren den Raum
+\begin{align*}
+	X(\Omega)\coloneqq\{v\in H^{-1}(\Omega), \text{so dass für alle }i\colon\partial_iv\in H^{-1}(\Omega)\}
+\end{align*}
+Dies ist ein Hilbert Raum mit der Norm
+\begin{align*}
+	\norm{v}_X\coloneqq\Big(\sum_{\abs{\alpha}\leq1}\norm{\partial^\alpha v}_{-1,\Omega}^2\Big)^{1/2}
+\end{align*}
+
+\begin{lemma}[Eine erste Charakterisierung der Ableitung in $H^{-1}$]
+	Sei $\Omega\subseteq\R^d$ ein Lipschitz-Gebiet (welche Vorraussetzungen genau). Dann gilt
+	\begin{align*}
+		L^2(\Omega)\subseteq X(\Omega)
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Sei $v\in L^2(\Omega)$. Wir definieren $\partial_i v\in \cD(\Omega)$
+	\begin{align*}
+		\inner{\partial_i v,\varphi} = -\inner{f,\partial_i\varphi}_{0,\Omega}
+	\end{align*}
+	für $\varphi\in\cD(\Omega)$. Weiter sehen wir
+	\begin{align*}
+		\abs{\inner{v,\partial_i\varphi}_{0,\Omega}}
+		\leq \norm{v}_{0,\Omega}\norm{\nabla\varphi}_{0,\Omega}
+		\leq \norm{v}_{0,\Omega}\norm{\varphi}_{1,\Omega}
+	\end{align*}
+	also $\norm{\partial_i v}_{-1,\Omega}\leq \norm{v}$, womit Hahn Banach eine Erweiterung von $\partial_iv$ liefert (genauer).
+\end{proof}
+
+\begin{proposition}[Dichtheit von $\cC^\infty(\Omega)$ in $X(\Omega)$]
+Es ist $\cC^\infty(\Omega)$ dicht in $X(\Omega)$ für den Halbraum $\R^{d-1}\times\R_{>0}$.
+\end{proposition}
+\begin{proof}
+	Wir setzen
+	\begin{align*}
+		Y(\Omega) =\{v\colon\R^d\to\R\mid \partial_dv\in H^{-1}(\R_{>0};L^2(\R^{d-1}))\}
+	\end{align*}
+	nun Behaupten wir, dass $Y(\Omega)$ in $X(\Omega)$ dicht ist. Sei dazu $\eta_j\in \cD(\R^{d-1})$ eine Standart Dirac-Schar. Sei $v\in X(\Omega)$. Setze $v_j\coloneqq v*\eta_j$ mit $*$ die Konvolution (sollte irgendwo definiert werden). Dann gilt $v_j\to v$ in $X(\Omega)$ (da die Norm auf $X$ stärker ist, als auf $L^2(\Omega)$) und $v_j\in Y(\Omega)$.
+	
+	Wir zeigen nun, dass $\cD(\overline{\Omega})$ (why overline) dicht in $X(\Omega)$ ist. Da $Y(\Omega)$ dicht in $X(\Omega)$ ist, reicht es zu zeigen, dass $\cD(\overline{\Omega})$ dicht in $Y(\Omega)$ ist.
+	Angenommen nicht. Dann gibt es $u\in Y(\Omega)\setminus\overline{\cD}(\Omega)$. Da $\overline{\cD}(\Omega)$ abgeschlossen (bzgl. $\norm{\cdot}_{H^{-1}(\R_{>0};L^2(\R^{d-1}))}$) ist und $(Y(\Omega),\norm{\cdot}_{-1,\Omega})$ ein normierter Raum, liefert Hahn Banach (Conti cor. 4.22) ein $F\in Y(\Omega)^*\setminus\{0\}$, so dass $F\vert_{\overline{\cD(\Omega)}} = \{0\}$. Folglich ist $F$ von der Form (Begründung?)
+	\begin{align*}
+		F(v) =\int_0^\infty\inner{f_1,v}_{0,\R^{d-1}}+\inner{f_2,\partial_dv}_{0,\R^{d-1}}\dif x
+	\end{align*}
+	für $f_1,f_2\in H_0^1(\R_{>0};L^2(\R^{d-1}))$.
+	Nun gilt für alle $v\in \cD(\overline{\Omega})$, dass
+	\begin{align*}
+		0&=F(v) \\
+		&=\int_0^\infty\inner{f_1,v}_{0,\R^{d-1}}+\inner{f_2,\partial_dv}_{0,\R^{d-1}}\dif x \\
+		&=\int_\R\inner{\tilde{f}_1,v}_{0,\R^{d-1}}+\inner{\tilde{f}_2,\partial_dv}_{0,\R^{d-1}}\dif x \\
+		&=\int_\R\inner{\tilde{f}_1,v}_{0,\R^{d-1}}-\inner{\partial_d\tilde{f}_2,v}_{0,\R^{d-1}}\dif x \\
+	\end{align*}
+	Also folgt (aus Dichtheit und Norm-Argumenten), dass
+	\begin{align*}
+		\tilde{f}_1-\partial_d\tilde{f}_2 = 0
+	\end{align*}
+	Folglich ist $\partial_d\tilde{f}_2\in H^1(\R,L^2(\R^{d-1}))$, also $f_2\in H_0^2(\R_{>0};L^2(\R^{d-1})$. Aber dann folgt für alle $y\in Y(\Omega)$ (Warum?), dass
+	\begin{align*}
+		\int_{\R_{>0}}\inner{f_2,\partial_d v}\dif x_d = -\int_{\R_{>0}}\inner{\partial_df_2,v}\dif x_d
+	\end{align*}
+	und folglich $F=0$ ein Widerspruch.
+\end{proof}
+
+
+\begin{lemma}[Lemma von J.L. Lions]\label{le:LemmaVonLions}
+Statement und Beweis aus \cite{Duv-1976}
+Sei $\Omega\subseteq\R^d$ ein Gebiet mit regulärem Rand und $v\colon\Omega\to\R$, so dass $v\in H^{-1}(\Omega)$ und $\partial_iv\in H^{-1}(\Omega)$ für alle $i$, dann folgt $v\in L^2(\Omega)$.
+\end{lemma}
+\begin{proof}
+	Wir behaupten, dass $X(\Omega)=L^2(\Omega)$ und zeigen dies in mehreren Schritten
+	\begin{enumerate}
+	\item Die Behauptung stimmt für $\Omega=\R^d$. Dazu bezeichne $\cF$ die Fourier-transformation. Dann folgt
+	\begin{align*}
+		(1+\abs{\xi}^2)^{-1/2}\cF(v)\in L^2(\R^d), \qquad
+		(1+\abs{\xi}^2)^{-1/2}\xi_i\cF(v)\in L^2(\R^d)
+	\end{align*}
+	und deshalb weiter
+	\begin{align*}
+		\int_{\R^d}(1+\abs{\xi}^2)^{-1}(1+\sum_i\xi_i^2)\abs{\cF(v)}^2\dif\xi
+	\end{align*}
+	also ist $v\in L^2(\R^d)=L^2(\Omega)$
+	
+	\item Die Behauptung stimmt für einen Halbraum $\Omega=\R^{d-1}\times\R_{>0}$.
+	Wir definieren $P\colon \cD(\Omega)\subseteq X(\Omega)\to\\cD(\Omega)\subseteq X(\R^d)$
+	Wir setzen (anderer Buchstabe?) für $v\in \cD(\Omega)$
+	
+	\begin{align*}
+		Pv(x) =\begin{cases}
+			v(x) 							&,\text{falls }x_d>0 \\
+			a_1 v(x',-x_d)+a_2v(x',-2x_d) 	&,\text{sonst}
+		\end{cases}
+	\end{align*}
+	wobei $a_1+a_2=1$ und $a_1+a_2/2=-1$ (Warum?). Wir behaupten nun, dass $P$ auf $\cD(\Omega)$ (why is $\Omega$ closed?) stetig ist bezüglich $\norm{\cdot}_X$. Falls dies war ist, so erhalten wir eine Erweiterung (wie genau) von $P$ auf $\Omega$.
+	Wegen der Dichte von $\cD(\Omega)$ nach der Proposition oben (wie genau) folgt $P\vert_\Omega(v)=v$ für $v\in X(\Omega)$. Dann folgt für $v\in X(\Omega)$, dass $Pv\in X(\R^d)$ und mit dem vorhergehenden, dass $Pv\in L^2(\R^d)$. Deshalb folgt, dass
+	\begin{align*}
+		v = P\vert_\Omega(v)\in L^2(\Omega)
+	\end{align*}
+	
+	Es verbleibt die Stetigkeit von $P$ bezüglich $\norm{\cdot}_X$ / der Topologien zu zeigen.
+	Dazu reicht es, die Stetigkeit von $P$ bezüglich der Topologie $H^{-1}(\Omega)\to H^{-1}(\Omega)$ auf $\cD(\Omega)$ und die Stetigkeit von $\partial_iP$ bezüglich der Topologie $H^{-1}(\Omega)\to H^{-1}(\Omega)$ auf $\cD(\Omega)$ zu zeigen. Es gilt für $i\in\{1,\dots,d-1\}$
+	\begin{align*}
+		\partial_iPv(x) &= \begin{cases}
+			\partial_i v &,\text{falls }x_d>0 \\
+			a_1\partial_iv(x',-x_d)+a_2\partial_iv(x',-2x_d) &,\text{falls }x_d<0
+		\end{cases} \\
+		&= P(\partial_iv(x))
+	\end{align*}	
+	sowie
+	\begin{align*}
+		\partial_dPv(x) &= \begin{cases}
+			\partial_dv &,\text{falls }x_d>0 \\
+			-a_1\partial_dv(x',-x_d)-2a_2\partial_dv(x',-2x_3) &,\text{falls }x_3<0
+		\end{cases} \\
+		&\eqqcolon Q(\partial_dv(x))
+	\end{align*}
+	Die Behauptung folgt also, wenn wir die Stetigkeit von $P\colon\cD(\Omega)\to X(\R^d)$ mit Topologien $\cD(\Omega)\subseteq H^{-1}(\Omega)$ und $X(\R^d)\subseteq H^{-1}(\R^d)$ und $Q\colon\cD(\Omega)\dots$ zeigen. Dazu berechnet man für $w\in H^1(\R^d)$
+	\begin{align*}
+		&\inner{Pv,w}_{0,\R^d} \\
+		&= \int_{\R^{d-1}\times\R_{>0}}vw\dif x + \int_{\R^{d-1}\times\R_{<0}}a_1v(x',-x_d)w(x)+a_2v(x',-2x_d)w(x)\dif x \\
+		&= \int_{\R^{d-1}\times\R_{>0}}vw\dif x +\int_{\R^{d-1}\times\R_{>0}}v(x',x_d)(- a_1)w(x',-x_d)-\frac{a_2}{2}v(x',x_d)w(x',-\frac{x_d}{2})\dif x \\
+		&= \int_{\R^{d-1}\times\R_{>0}}v(x)\left(w(x) + a_1w(x',-x_d)+\frac{a_2}{2}w(x',-\frac{x_d}{2})\right)\dif x \\
+		&= \inner{v,P^\dagger w}_{0,\Omega}
+	\end{align*}
+	Dann ist	
+	\begin{align*}
+		P^\dagger w(x',0) = w(x',0) + a_1w(x',0)+\frac{a_2}{2}w(x',0) = 0
+	\end{align*}
+	wenn wir $a_1+a_2/2=-1$ wählen und folglich $P^\dagger w\in H^1_0(\Omega)$. Wir sehen, dass die zu $P$ transponierte Abbildung $P^\dagger\colon H^1(\R^d)\to H^1_0(\Omega)$ stetig ist. Analog schlussfolgern wir für $Q$.
+	
+	
+	
+	
+	\item Die Behauptung stimmt generell.
+	Da $\Omega$ eine beschränkte Lipschitzberandete Menge ist, gibt es eine endliche Überdeckung $U_i$ von $\Omega$ und $\psi_i$, sodass $\Omega$ auf $U_i$ der strikte Hypograph (oder Epigraph) von $\psi_i$ ist für $i\geq1$ und $U_0\Subset\Omega$. Ferner gibt es dann eine Zerlegung der Eins bezuüglich $U_i$, also $\theta_i\in \cD(U_i)$ mit $0\leq\theta_i$, so dass $1=\sum_i\theta_i$ auf $\overline{\Omega}$. Indem wir $\theta_0$ mit $0$ auf $\R^d\setminus U_0$ erweitern, ist $\theta_0v\in X(\R^d)$. (The rest of the argumentation requires $C^1$ boundary, but is very incomplete).
+	\end{enumerate}
+\end{proof}
+
+\subsubsection*{Kornsche Ungleichung ohne Randbedingungen}
+
+\begin{lemma}[Globale Approximation, Conti Thrm. 7.6]
+	Sei $\Omega\subseteq\R^d$ beschränkt mit Lipschitz-Rand und $p\in[1,\infty)$, $v\in W^{1,p}(\Omega)$. Dann gibt es eine Folge $v_i\in C_c^\infty(\R^d)$ mit $v_i\to v$ in $W^{1,p}(\Omega)$
+\end{lemma}
+
+\begin{lemma}[Kettenregel, Conti Lemma 2.39 - reicht hier nicht aus]
+	Sei $\Omega\subseteq\R^d$ offen, $p\in[1,\infty)$, $v\in W^{1,p}(\Omega;\R^m)$
+\end{lemma}
+
+\begin{lemma}[Erweiterungen, Conti Thrm. 7.8]
+	Sei $\Omega\subseteq\R^d$ beschränkt mit Lipschitz-Rand und $p\in[1,\infty)$. Dann existiert eine beschränkte, lineare Erweiterung $E\colon W^{1,p}(\Omega)\to W^{1,p}(\R^d)$ mit $Ev\vert_\Omega = v$ und $\norm{\partial_iEv+\partial_jEw}_{2,\R^d}^2 \leq c\norm{\partial_iv+\partial_jw}_{2,\Omega}^2$.
+\end{lemma}
+\begin{proof}
+	Wir nehmen zunächst an, dass $v\in C_c^\infty(\R^d)$ ist. Seien $\theta_i$ und $B_i\coloneqq B_{r_i}$ wie in dem Lemma oben zur Partition der Eins. Setze $i>0$ fest. Sei $\psi$, wie in (Conti, 7.1). Man sieht  (genauer) mit geometrischen Überlegungen, dass
+	\begin{align*}
+		0<(1+M^2)^{-1/2}(\psi(x')-x_d)\leq \dist(x,\Omega)\leq \psi(x')-x_d
+	\end{align*}
+	Da $\Omega$ Lipschitz ist, gibt es nach Stein (angeblich) ein $f\in C^\infty$, so dass
+	\begin{align*}
+		0 < 2(\psi(x')-x_d)\leq f(x)\leq c_i(\psi(x')-x_d)
+	\end{align*}
+	und für Multiindizes $\alpha$
+	\begin{align*}
+		\abs{\partial^\alpha f(x)}\leq c_\alpha f(x)^{1-\alpha}
+	\end{align*}
+	
+	
+	Wir definieren $\Phi_t\colon\R^d\to\R^d$ für $t\in[1,2]$ durch
+	\begin{align*}
+		\Phi_t(x)\coloneqq\begin{cases}
+			x &,\text{falls }x_d\leq\psi(x') \\
+			(x',x_d+tf(x)) &,\text{sonst}
+		\end{cases}
+	\end{align*}
+	Sowie ein Gewicht $w\in c^0([1,2])$, so dass
+	\begin{align*}
+		\int_1^2w(t)\dif t &= 1 \\
+		\int_1^2tw(t)\dif t &= 0
+	\end{align*}
+	Nun definieren wir eine Erweiterung
+	\begin{align*}
+		\tilde{u}_j(x)\coloneqq\begin{cases}
+			\int_1^2w(t)\left(u_j(\Phi_t(x))+t(\partial_jf(x))u_d(\Phi_t(x))\right)\dif t &,\text{falls }x\text{ im Epigraphen von }\psi\text{ ist.} \\
+			u(x) &,\text{sonst}
+		\end{cases}
+	\end{align*}
+	In Nitsche wird jetzt Stetigkeit gezeigt (nicht Lipschitz-Stetigkeit).	
+	
+	Wir wollen die Lipschitzstetigkeit von $\Phi$ zeigen. Seien dazu $x,y\in\R^d$. Falls beide auf im Epigraphen oder beide im Supergraphen von $\Psi$ sind, sind wir fertig. Andernfalls nehmen wir $x_n<\psi(x')$ und $\psi(y')<y_n$ an. Sei $z$ der zu $x$ nächste Punkt auf der Strecke $[x,y]$ mit $z_n=\psi(z)$. Dann gehört $z$ sowohl zum Epigraphen, als auch zum Supergraphen von $\psi$ und wir erhalten
+	\begin{align*}
+		\abs{\Phi(x)-\Phi(y)}\leq\abs{\Phi(x)-\Phi(z)}+\abs{\Phi(z)-\Phi(y)}\leq L\abs{x-z}+L\abs{z-y} =\abs{x-y}
+	\end{align*}
+	und die Lipschitzstetigkeit folgt. Da $B_i$ beschränkt ist, (und noch etwas) folgt damit $\Phi\in W^{1,\infty}(B_i)$. Nun setzen wir 
+	\begin{align*}
+		\tilde{v}(x)\coloneqq\theta_i(x)v(\Phi(x))
+	\end{align*}
+	Wir erhalten (warum genau?)
+	\begin{align*}
+		\e_{jk} = \int_1^2w(t)\left(\e_{jk}(u\circ \Phi_t)+t(\partial_jf)\e_{kd}(u\circ \Phi_t)+t(\partial_kf)\e_{jd}(u\circ \Phi_t)+t^2(\partial_jf)(\partial_kf)\e_{dd}(u\circ \Phi_t)+t(\partial_{j}\partial_kf)u_d\circ\Phi_t\right)\dif t
+	\end{align*}
+	Wegen Taylor gilt
+	\begin{align*}
+		u_d\circ\Phi_t = u_d\circ\Phi_1+f\int_1^t(\partial_du)\circ\Phi_s\dif s
+	\end{align*}
+	Dies führt dann zu (warum?)
+	\begin{align*}
+		\int_1^2tw(t)u_d\circ \Phi_t\dif t
+		= \int_1^2tw(t)\left(u_d\circ\Phi_1+f\int_1^t(\partial_du)\circ\Phi_s\dif s\right)\dif t \\
+		= \int_1^2tw(t)u_d\circ\Phi_1+f\int_1^2tw(t)\int_1^t(\partial_du)\circ\Phi_s\dif s\dif t \\
+		= f\int_1^2tw(t)\int_1^t(\partial_du)\circ\Phi_s\dif s\dif t\\
+		= f\int_1^2\e_{dd}(u\circ\Phi_s)\int_s^2tw(t)\dif t\dif s
+	\end{align*}
+	
+	Sei $x'$ fest. Nun wählen wir eine Transformation, so dass $\psi(x')=0$ (Wo wird das verwendet?). Wir erhalten
+	\begin{align*}
+		\int_1^2\abs{\e_{jk}(u(\Phi_t(x)))}\dif t
+		&= \int_1^2\abs{\e_{jk}(u(x_d+tf(x_d)))}\dif t
+		&= \int_{x_d+f(x_d)}^{x_d+2f(x_d)}f^{-1}(x_d)\abs{\e_{jk}(u(s))}\dif s
+	\end{align*}
+	und weiter
+	\begin{align*}
+		f^{-1}(x_d)\leq\frac{1}{2}\abs{x_d}^{-1} \\
+		x_d+f(x_d)\geq\abs{x_d} \\
+		x_d+2f(x_d)\leq 2c_i\abs{x_d}
+	\end{align*}
+	Wir erhalten mit $c=2c_i$, dass
+	\begin{align*}
+		2\int_1^2\abs{\e_{jk}(u(\Phi_t(x)))}\dif t\leq \frac{1}{\abs{x_d}}\int_{\abs{x_d}}^{c\abs{x_d}}\abs{\e_{jk}(u(s))}\dif s
+	\end{align*}
+	und weiter mit der Schwarzschen Ungleichung
+	\begin{align*}
+		4\int_1^2\abs{\e_{jk}(u(\Phi_t(x)))}^2\dif t\leq \frac{2}{3}c^{3/2}\abs{x_d}^{-1/2}\int_{\abs{x_d}}^{c\abs{x_d}}s^{-1/2}\abs{\e_{jk}(u(s))}^2\dif s
+	\end{align*}
+	Es folgt
+	\begin{align*}
+		\int_{-\infty}^{\psi(x')}\int_1^2\abs{\e_{jk}(u(\Phi_t(x)))}^2\dif t
+		&\leq c\int_{-\infty}^{\psi(x')}s^{-1/2}\abs{\e_{jk}(u(s))}^2\int_{c^{-1}s}^st^{-1/2}\dif t\dif s \\
+		&\leq c\int_{\psi(x')}^{\infty}\abs{\e_{jk}(u(s))}^2\dif s \\
+	\end{align*}
+	
+	
+	
+	
+	Nach der Kettenregel (zitieren) folgt $\tilde{v}\in W^{1,p}(B_i)$ mit (genauer)
+	\begin{align*}
+		\nabla \tilde{v} = (\nabla v\circ\Phi)\nabla\Phi
+	\end{align*}
+	Folglich ist
+	\begin{align*}
+		\abs{\nabla \tilde{v}}(x)\leq \abs{\nabla\Phi}_{0,\infty,B_i}\abs{\nabla v(\Phi(x))}\leq c_i\abs{\nabla v}(\Phi(x))
+	\end{align*}
+	Wir mit dem Transformationssatz (Frage: Was passiert mit dem $\theta_i$?, Recap Transformationssatz)
+	\begin{align*}
+		\int_{B_i}\abs{\nabla \tilde{v}}^p+\abs{\tilde{v}}^p \dif x
+		&\leq \int_{B_i}c_i\abs{\nabla v(\Phi(x))}^p+\abs{v(\Phi(x))}^p\dif x \\
+		&= \int_{B_i\cap\Omega}\left(c_i\abs{\nabla v(x)}^p+\abs{v(x)}^p\right)\abs{\det(\nabla\Phi(x))}\dif x \\
+		&\leq C_i\int_{B_i\cap\Omega}\abs{\nabla v}^p+\abs{v}^p\dif x
+	\end{align*}
+	
+	dies alles gilt analog für ein $w\in C_c^\infty(\R^d)$.
+	Wir berechnen nun konkret für $x_d\leq\psi(x')$ oder $l>d$
+	\begin{align*}
+		\partial_j \Phi_l(x)
+		= \partial_jx_l = \delta_{jl}
+	\end{align*}
+	Damit ergibt sich
+	\begin{align*}
+		\abs{\partial_j\tilde{v}(x)+\partial_k\tilde{w}(x)}
+		&= \abs{\sum_{l}\partial_lv(\Phi(x))\partial_j\Phi_l(x)+\sum_l\partial_lw(\Phi(x))\partial_k\Phi_l(x)} \\
+		&= \abs{(\partial_jv)(\Phi(x))+(\partial_kw)(\Phi(x))}
+	\end{align*}
+	Falls dagegen $x_d>\psi(x')$, so folgt
+	\begin{align*}
+		\partial_j\Phi_d(x)
+		= \partial_j(2\psi(x')-x_d)
+	\end{align*}
+	Damit ergibt sich
+	\begin{align*}
+		&\abs{\partial_j\tilde{v}(x)+\partial_k\tilde{w}(x)} \\
+		&= \abs{\sum_{l}\partial_lv(\Phi(x))\partial_j\Phi_l(x)+\sum_l\partial_lw(\Phi(x))\partial_k\Phi_l(x)} \\
+		&= \abs{(\partial_jv)(\Phi(x))+(\partial_dv)(\Phi(x))\partial_j(2\psi(x')-x_d)+(\partial_kw)(\Phi(x))+(\partial_dw)(\Phi(x))\partial_k(2\psi(x')-x_d)} \\
+		&\leq \abs{(\partial_jv)(\Phi(x))+(\partial_kw)(\Phi(x))}+\abs{(\partial_dv)(\Phi(x))\partial_j(2\psi(x')-x_d)+(\partial_dw)(\Phi(x))\partial_k(2\psi(x')-x_d)} \\
+		&\leq \abs{(\partial_jv)(\Phi(x))+(\partial_kw)(\Phi(x))}+(2\abs{\psi}_{W^{1,\infty}(\Omega)}+1)\abs{(\partial_dv)(\Phi(x))+(\partial_dw)(\Phi(x))}
+	\end{align*}
+	Also erhalten wir insgesamt mit dem Transformationssatz
+	\begin{align*}
+		\int_{B_i}\abs{\partial_j\tilde{v}(x)+\partial_k\tilde{w}(x)}^p\dif x 
+		&\leq \int_{B_i}\abs{\partial_jv(x)+\partial_kw(x)}^p+c_i\dif x 
+	\end{align*}
+	
+	Indem wir über $i$ summieren (ausführen) erhalten wir einen beschränkten Erweiterungsoperator $\tilde{E}\colon W^{1,p}(\Omega)\to W^{1,p}(\tilde{\Omega})$, wobei $\tilde{\Omega}\coloneqq\bigcup_iB_i$, so dass die behaupteten Eigenschaften erfüllt sind. Nun wählen wir eine Abschneidefunktion $\tilde{\theta}\in C_c^\infty(\Omega;[0,1])$ mit $\theta=1$ auf $\Omega$ und setzen
+	\begin{align*}
+		(Ev)(x)\coloneqq\tilde{\theta}(x)(\tilde{E}v)(x)
+	\end{align*}
+	Dann ist $Ev\in W_0^{1,p}(\tilde{\Omega}\subseteq W^{1,p}(\R^d)$ und nach der Produktregel
+	\begin{align*}
+		\nabla(Ev)=\tilde{\theta}\nabla(\tilde{E}v)+(\tilde{E}v)\otimes \nabla \tilde{\theta}
+	\end{align*}
+	also folgt
+	\begin{align*}
+		\norm{\nabla E u}_{p}\leq \norm{\nabla \tilde{E}v}_{p}+\norm{\tilde{E}v}_p\norm{\nabla\tilde{\theta}}_{\infty}
+	\end{align*}
+	womit die Behauptung folgt (wirklich?).
+\end{proof}
+
+\newpage
+
+Wir setzen
+\begin{align*}
+	K(\Omega;\R^d)\coloneqq\{v\in L^2(\Omega;\R^d)\colon \e(v)\in L^2(\Omega;\R^d) \text{ im distributionellen Sinne}\}
+\end{align*}
+Dabei verstehen wir unter $\e_{ij}(v)\in L^2(\Omega)$ im distributionellen Sinne, dass für alle $\varphi\in\cD(\Omega)$
+\begin{align*}
+	\inner{\e_{ij}(v),\varphi}_{0,\Omega}= -\frac{1}{2}\left(\inner{v_i,\partial_j\varphi}_{0,\Omega}+\inner{v_j,\partial_i\varphi}_{0,\Omega}\right)
+\end{align*}
+Wir definieren nun für $v\in K(\Omega;\R^d)$ die Norm
+\begin{align*}
+	\norm{v}_K\coloneqq \left(\abs{v}_{0,\Omega}^2+\abs{\e(v)}_{0,\Omega}^2\right)^{1/2}
+\end{align*}
+$K(\Omega;\R^d)$ wird versehen mit der Norm $\norm{\cdot}_K$ zu einem Hilbert Raum.	
+Wir behaupten, dass
+\begin{proposition}
+	Es gilt für $\Omega\subseteq\R^d$ offen, zusammenhängend und mit $C^1$ Rand, dass
+	\begin{align*}
+		K(\Omega;\R^d) =H^1(\Omega,\R^d)
+	\end{align*}
+\end{proposition}
+\begin{proof}
+	Es folgt aus $v\in K(\Omega;\R^d)$, dass $\e_{ij}(v)\in L^2(\Omega)$ und folglich $\partial_k\e_{ij}(v)\in H^{-1}(\Omega)$. Nun erhält man
+	\begin{align*}
+		\partial_j\partial_kv_i = \partial_j\e_{ik}(v)+\partial_k\e_{ij}(v)-\partial_i\e_{jk}(v)\in H^{-1}(\Omega)
+	\end{align*}
+	Es folgt dann mit Lemma \ref{le:LemmaVonLions} (Lemma von Lions), dass folglich $\partial_kv_i\in L^2(\Omega)$, also ist $v\in H^1(\Omega,\R^d)$ und es folgt $K(\Omega;\R^d)\subseteq H^1(\Omega,\R^d)$.
+\end{proof}
+
+Wir zitieren nun ein Korollar aus Werner (Funktionalanalysis, 2011) einen Korollar vom Satz der offenen Abbildungen (Banach-Steinhaus)
+\begin{proposition}[Korollar IV.3.5, Werner]
+	Sind $\norm{\cdot}_1$ und $\norm{\cdot}_2$ zwei Normen auf dem Vektorraum $V$, die beide $V$ zu einem Banachraum machen und gibt es ein $c>0$, so dass für alle $v\in V$
+	\begin{align*}
+		\norm{v}_1\leq c\norm{v}_2
+	\end{align*}
+	So sind $\norm{\cdot}_1$ und $\norm{\cdot}_2$ äquivalent.
+\end{proposition}
+
+Da sowohl $\norm{\cdot}_K$, als auch $\norm{\cdot}_{1,\Omega}$ $K(\Omega;\R^d)=H^1(\Omega;\R^d)$ zu einem Banachraum machen und gilt
+\begin{align*}
+	\norm{v}_K = \left(\abs{v}_{0,\Omega}^2 + \abs{\e(v)}_{0,\Omega}^2\right)^{1/2} \leq \abs{v}_{0,\Omega}+\frac{1}{2}\left(\abs{\nabla v}_{0,\Omega}+\abs{\nabla v^\top}_{0,\Omega}\right) = \norm{v}_{1,\Omega}
+\end{align*}
+folgt aus der vorausgehenden Proposition, dass $\norm{\cdot}_K$ und $\norm{\cdot}_{1,\Omega}$ äquivalent sind, also insbesondere
+
+\begin{lemma}[Kornsche Ungleichung ohne Randbedingungen]
+	(nach \cite{Cia-1997} bewiesen für d=3)
+	Sei $\Omega\subseteq\R^d$ ein Gebiet, dann gibt es ein $c_K>0$, so dass für alle $v\in H^1(\Omega;\R^d)$ gilt
+	\begin{align*}
+		\norm{v}_{1,\Omega}\leq c_K\norm{v}_K
+	\end{align*}
+\end{lemma}
+
+
+Ferner ist $\abs{\e(\cdot)}_{0,\Omega}$ convex und Gateaux-differenzierbar, also schwach lower semi-continuous (nach \cite{Kik-1988})
+
+\subsubsection*{Erweiterung für Lipschitz-Mengen}
+Unser Ziel ist es, diese Aussage auf mehr Gebiete $\Omega$ zu erweitern.
+Dazu definieren wir für eine Funktion $\psi\colon\R^{d-1}\to\R^d$ den Epigraphen durch
+\begin{align*}
+	\epi(\psi)\coloneqq\{(y',y_n)\colon y_n>\psi(y')\}
+\end{align*}
+Weiter bezeichnen wir mit $H^k_S(\Omega;\R^d)$ die Menge aller $v\in H^k(\Omega;\R^d)$, so dass $v=0$ auf der Randmenge $S\subseteq\Gamma$.
+Mit diesen Vorraussetzungen erhalten wir das folgende Lemma
+
+\begin{lemma}[Erweiterung von Epigraphen]\label{le:ErweiterungVonEpigraphen}
+	Gegeben sei ein Ball $B=B_r(0)\subseteq\R^d$, eine Lipschitz-stetige Funktion $\psi\colon\R^{d-1}\to\R$ mit beschränkter Lipschitzkonstante $\Lip(\psi)\leq M$ Diese definieren ein Gebiet $\Omega\coloneqq B\cap\epi(\psi)$. Wir definieren einen Radius $\tir\coloneqq\sqrt{r^2+(2M+1)r}$ und einen Ball $\tiB\coloneqq B_{\tir}(0)$. Dann existiert ein $c_E>0$, welches von $d$ und $M$ abhängt, eine stetige, lineare Erweiterung $E\colon H^1_{\partial B}(\Omega;\R^d)\to H^1_{\partial \tiB}(B';\R^d)$ mit $Ev\vert_\Omega = v$ auf $B$ und
+	\begin{align}
+		\abs{\e(Ev)}_{0,\tiB}^2 \leq c_E\abs{\e(v)}_{0,\Omega}^2 \label{eq:ErweiterungEpigraphenUngleichung1}
+	\end{align}
+\end{lemma}
+\begin{proof}
+	(siehe auch Conti, Thrm 7.8) Wir folgen im Wesentlichen \cite{Nit-1981}. Im Folgenden bezeichnen wir mit $\tiOmega\coloneqq\epi(\psi)\cap\tiB$ und $\tiOmega^\complement\coloneqq \tiB\setminus\tiOmega$ das Komplement von $\tiOmega$ bezüglich $\tiB$.
+	 Man sieht  (genauer) mit geometrischen Überlegungen, dass
+	\begin{align*}
+		0<(1+M^2)^{-1/2}(\psi(x')-x_d)\leq \dist(x,\Omega)\leq \psi(x')-x_d
+	\end{align*}
+	Da $\epi(\psi)$ Lipschitz ist, gibt es nach Stein (angeblich) ein $f\in C^\infty(\tiOmega^\complement;\R_{>0})$ (nachschauen), so dass
+	\begin{align}
+		0 < 2(\psi(x')-x_d)\leq f(x)\leq \frac{c_f}{2}(\psi(x')-x_d) \label{eq:erweiterungEpigraphfUngleichung}
+	\end{align}
+	(TODO: wo wird der Faktor 1/2) verwendet?) und für Multiindizes $\alpha$ gilt
+	\begin{align*}
+		\abs{\partial^\alpha f(x)}\leq c_{\abs{\alpha}} f(x)^{1-\abs{\alpha}}
+	\end{align*}
+	
+	\begin{figure}[h]
+	\centering
+	\input{Drawings/ErweiterungNullrand2.pdf_tex}
+	\caption{Visualisierung der Erweiterung}
+	\end{figure}
+	
+	Wir definieren eine Spiegelung $\Phi_t\colon\tiOmega^\complement\to\epi(\psi)$ für $t\in[1,2]$ durch
+	\begin{align*}
+		\Phi_t(x)\coloneqq\vect{x'\\x_d+tf(x)}
+	\end{align*}
+	wobei $x'\coloneqq\vect{x_1&\dots& x_{d-1}}^\top$. 
+	für $x\in\tiOmega^\complement$ folgt mit \eqref{eq:erweiterungEpigraphfUngleichung} 
+	\begin{align*}
+		 \psi(x')-x_d\leq 2(\psi(x')-x_d)\leq f(x)
+	\end{align*}
+	und folglich
+	\begin{align*}
+		\psi(x')\leq f(x)+x_d\leq x_d+tf(x)
+	\end{align*}
+	Also ist tatsächlich $\Phi_t(x)\in\epi(\psi)$.
+	Nun definieren wir ein Gewicht $w\in C^0([1,2])$, so dass
+	\begin{align*}
+		\int_1^2w(t)\dif t = 1
+		\qquad\text{und}\qquad\int_1^2tw(t)\dif t = 0
+	\end{align*}
+	Schließlich definieren wir eine Erweiterung für $v\in H^1_{\partial B}(\Omega;\R^d)$
+	\begin{align*}
+		(Ev_j(x))_j\coloneqq\begin{cases}
+			v(x) &,\text{falls }x\in\epi(\psi)\\
+			\int_1^2w(t)\big(v_j(\Phi_t(x))+t(\partial_jf(x))v_d(\Phi_t(x))\big)\dif t &,\text{sonst}
+		\end{cases}
+	\end{align*}
+	wobei wir stillschweigend $v_j=0$ auf $\epi(\psi)\setminus B$ erweitert haben.
+	
+	Wir zeigen zunächst, dass $Ev\in H^1(\tiB;\R^d)$. Es geht aus der Konstruktion hervor, dass $Ev\big\vert_{\tiOmega}\in H^1(\tiOmega;\R^d)$ und $Ev\big\vert_{\tiOmega^\complement}\in H^1(\tiOmega^\complement;\R^d)$. Es verbleibt also die Stetigkeit an der Naht $\graph(\psi)=\{(x',\psi(x'))\colon x'\in\R^d\}$ zu zeigen.
+	Sei dazu $v\in C^0(\Omega;\R^d)$ und $x^k=(x',x_d^k)\in\tiOmega^\complement$ eine Folge, die gegen $x^*=(x',\psi(x'))\in \graph(\psi)$ konvergiert. Dann gilt $0\leq f(x^k)\leq\frac{c_f}{2}(\psi(x')-x_d^k)\to0$ für $k\to\infty$ und es folgt $\Phi_t(x^k)\to x^*$. Damit ergibt sich aufgrund der Wahl von $w$
+	\begin{align*}
+		\abs{\int_1^2w(t)t(\partial_jf(x^k))v_d(\Phi_t(x))\dif t}
+		&=\abs{(\partial_jf(x^k))}\abs{\int_1^2w(t)tv_d(\underbrace{\Phi_t(x^k)}_{\to x^*})\dif t} \\
+		&\leq c_1 \abs{\int_1^2w(t)tv_d(\underbrace{\Phi_t(x)}_{\to x^*}))\dif t} \\
+		&\xrightarrow{k\to\infty}c_1 \abs{\int_1^2w(t)tv_d(x^*)\dif t}
+		=0
+	\end{align*}
+	Damit ergibt sich wieder aufgrund der Wahl von $w$
+	\begin{align*}
+		\lim_{k\to\infty}Ev(x^k)&=\lim_{k\to\infty}\int_1^2w(t)\big(v_j(\underbrace{\Phi_t(x^k)}_{\to x^*})+t(\partial_jf(x^k))v_d(\Phi_t(x^k))\big)\dif t \\
+		&=\int_1^2w(t)v_j(x^*)\dif t
+		= v_j(x^*)
+	\end{align*}
+	Wie erwünscht.
+	
+	Wir zeigen nun $Ev\in H^1_{\partial B}(\tiB;\R^d)$, also dass $Ev(x)=0$ für alle $x\in\partial \tiB$.
+	Für den Fall, dass $x\in\tiOmega\setminus\Omega$, ist $Ev(x) = v(x) = 0$ nach Konstruktion.
+	Falls $\abs{x'}>r$ ist ebenfalls nach Konstruktion $Ev(x)=0$.
+	Falls nun $x\in\tiOmega^\complement$, $\abs{x'}\leq r$ und $x_d\leq0$, so folgt
+	\begin{align*}
+		\tir^2 = \abs{x}^2 = \abs{x'}^2+x_d^2\leq r^2+x_d^2
+	\end{align*}
+	und wegen $x_d\leq0$ ist 
+	\begin{align*}
+		x_d\leq -\left(\tir^2-r^2\right)^{1/2}= -2Mr-r
+	\end{align*}
+	Damit folgt
+	\begin{align*}
+		x_d\leq -2Mr-r\leq -2\Lip(\psi)\abs{x'}-r\leq -2\psi(x')-r
+	\end{align*}
+	und folglich
+	\begin{align*}
+		r-x_d\leq -2(\psi(x')-x_d)\leq f(x)
+	\end{align*}
+	Also
+	\begin{align*}
+		r\leq x_d+f(x) \leq x_d+tf(x)
+	\end{align*}
+	und es ist also $\Phi_t(x)\in\epi(\psi)\setminus B$, also $v_j(\Phi_t(x))=0$ und somit auch $Ev(x) = 0$. Dies war auch die Motivation für die Wahl von $\tir$.
+	
+	Die Linearität des Operators ist klar, ebenso die Stetigkeit, die aus der Beschränktheit folgt. Es verbleibt also die Eigenschaft \eqref{eq:ErweiterungEpigraphenUngleichung1} zu zeigen.
+	
+	Nun gilt mit der Kettenregel (siehe z.B. Conti lemma 2.39) für $i>d$
+	\begin{align*}
+		\partial_i(v_j\circ\Phi_t)
+		&= \nabla v_j\big\vert_{\Phi_t} \partial_i\Phi_t \\
+		&= \partial_iv_j\big\vert_{\Phi_t}+\partial_dv_j\big\vert_{\Phi_t}\partial_i(x_d+tf(x)) \\
+		&= \partial_iv_j\big\vert_{\Phi_t}+t\partial_if\partial_dv_j\big\vert_{\Phi_t}
+	\end{align*}
+	und für $i=d$
+	\begin{align*}
+		\partial_d(v_j\circ\Phi_t)
+		&= \nabla v_j\big\vert_{\Phi_t} \partial_d\Phi_t \\
+		&= \partial_dv_j\big\vert_{\Phi_t}\partial_d(x_d+tf(x)) \\
+		&= \partial_dv_j\big\vert_{\Phi_t}+t\partial_df\partial_dv_j\big\vert_{\Phi_t}
+	\end{align*}
+	Also in jedem Fall
+	\begin{align*}
+		\partial_i(v_j\circ\Phi_t) = \partial_iv_j\big\vert_{\Phi_t}+t\partial_if\partial_dv_j\big\vert_{\Phi_t}
+	\end{align*}
+	Wir erhalten auf $\tiOmega^\complement$
+	\begin{align*}
+		2\e_{ij}(Ev)
+		&= \partial_i\int_1^2w(t)\big(v_j\circ\Phi_t+t(\partial_jf)v_d\circ\Phi_t\big)\dif t \\
+		&\quad+\partial_j\int_1^2w(t)\big(v_i\circ\Phi_t+t(\partial_if)v_d\circ\Phi_t\big)\dif t \\
+		&= \int_1^2w(t)\big(\partial_i(v_j\circ\Phi_t)+t(\partial_i\partial_jf)v_d\circ\Phi_t+t(\partial_jf)\partial_i(v_d\circ\Phi_t)\big)\dif t \\
+		&\quad+\int_1^2w(t)\big(\partial_j(v_i\circ\Phi_t)+t(\partial_j\partial_if)v_d\circ\Phi_t+t(\partial_if)\partial_j(v_d\circ\Phi_t(x))\big)\dif t \\
+		%
+		&\begin{aligned}=\int_1^2w(t)\Big(\quad&\partial_iv_j\big\vert_{\Phi_t}+\partial_if\partial_dv_j\big\vert_{\Phi_t}+t(\partial_i\partial_jf)v_d\circ\Phi_t & \\
+		+&t(\partial_jf)\partial_iv_d\big\vert_{\Phi_t}+t^2(\partial_jf)^2\partial_dv_d\big\vert_{\Phi_t} & \\
+		+&\partial_jv_i\big\vert_{\Phi_t}+t\partial_jf\partial_dv_i\big\vert_{\Phi_t}+t(\partial_j\partial_if)v_d\circ\Phi_t & \\
+		+&t(\partial_if)\partial_jv_d\big\vert_{\Phi_t}+t^2(\partial_if)(\partial_jf)\partial_dv_d\big\vert_{\Phi_t}&\Big)\dif t
+		\end{aligned} \\
+		%
+		&\begin{aligned}=\int_1^2w(t)\Big(\quad&\partial_iv_j\big\vert_{\Phi_t}+\partial_jv_i\big\vert_{\Phi_t}+t(\partial_if)\partial_jv_d\big\vert_{\Phi_t}+t\partial_if\partial_dv_j\big\vert_{\Phi_t} & \\
+		+&2t(\partial_i\partial_jf)v_d\circ\Phi_t+t(\partial_jf)\partial_iv_d\big\vert_{\Phi_t}+t\partial_jf\partial_dv_i\big\vert_{\Phi_t} & \\
+		+&t^2(\partial_jf)^2\partial_dv_d\big\vert_{\Phi_t}+t^2(\partial_if)(\partial_jf)\partial_dv_d\big\vert_{\Phi_t}&\Big)\dif t \\
+		\end{aligned}\\
+		%
+		&\begin{aligned}=\int_1^2w(t)\Big(\quad&2\e_{ij}(v)\big\vert_{\Phi_t}+2t(\partial_if)\e_{jd}(v)\big\vert_{\Phi_t}+2t(\partial_jf)\e_{id}(v)\big\vert_{\Phi_t} & \\
+		+&2t^2(\partial_if)(\partial_jf)\e_{dd}(v)\big\vert_{\Phi_t}+2t(\partial_{i}\partial_jf)v_d\circ\Phi_t&\Big)\dif t
+		\end{aligned}
+	\end{align*}
+	Zunächst möchten wir uns um den letzten Term im Integral kümmern. Wir erhalten mit dem Hauptsatz der Integralrechnung (Vorraussetzungen prüfen) und der Kettenregel auf $\tiOmega^\complement$
+	\begin{align*}
+		v_d\circ\Phi_t
+		&= v_d\circ\Phi_1+\int_1^t\partial_sv_d\circ\Phi_s\dif s \\
+		&= v_d\circ\Phi_1+\int_1^t\nabla v_d\big\vert_{\Phi_s}\partial_s\Phi_s\dif s \\
+		&= v_d\circ\Phi_1+f\int_1^t\partial_dv_d\big\vert_{\Phi_s}\dif s
+	\end{align*}
+	Womit dann folgt, dass
+	\begin{align*}
+		\int_1^2tw(t)v_d\circ \Phi_t\dif t
+		&= \int_1^2tw(t)\left(v_d\circ\Phi_1+f\int_1^t\partial_dv_d\big\vert_{\Phi_s}\dif s\right)\dif t \\
+		&= \int_1^2tw(t)v_d\circ\Phi_1\dif t+f\int_1^2tw(t)\int_1^t\partial_dv_d\big\vert_{\Phi_s}\dif s\dif t \\
+		&= f\int_1^2tw(t)\int_1^t\partial_dv_d\big\vert_{\Phi_s}\dif s\dif t\\
+		&= f\int_1^2\e_{dd}(v)\big\vert_{\Phi_s}\int_s^2tw(t)\dif t\dif s
+	\end{align*}
+	Wir erhalten damit nun die Abschätzung 
+	\begin{align*}
+		&\abs{\e_{ij}(Ev)} \\
+		&\begin{aligned}\leq \norm{w}_{L^\infty([1,2])}\int_1^2\Big|&\quad\e_{ij}(v)\big\vert_{\Phi_t}+t(\partial_if)\e_{jd}(v)\big\vert_{\Phi_t}+t(\partial_jf)\e_{id}(v)\big\vert_{\Phi_t}& \\
+		&+t^2(\partial_if)(\partial_jf)\e_{dd}(v)\big\vert_{\Phi_t}+&\Big|\dif t
+		\end{aligned} \\
+		&\quad+\abs*{(\partial_{i}\partial_jf)\int_1^2w(t)tv_d\circ\Phi_t\dif t} \\
+		&\begin{aligned}\leq c_w\Big(&\quad\int_1^2\abs{\e_{ij}(v)\big\vert_{\Phi_t}}\dif t+\norm{t(\partial_if)}_{L^\infty([1,2])}\int_1^2\abs{\e_{jd}(v)\big\vert_{\Phi_t}}\dif t & \\
+		&+\norm{t(\partial_jf)}_{L^\infty([1,2])}\int_1^2\abs{\e_{id}(v)\big\vert_{\Phi_t}}\dif t & \\
+		&+\norm{t^2(\partial_if)(\partial_jf)}_{L^\infty([1,2])}\int_1^2\abs{\e_{dd}(v)\big\vert_{\Phi_t}}\dif t&\Big )
+		\end{aligned} \\
+		&\quad+\abs*{(\partial_{i}\partial_jf)}\abs{f}\abs*{ \int_1^2\e_{dd}(v)\big\vert_{\Phi_s}\int_s^2tw(t)\dif t\dif s} \\
+		&\leq c_w\int_1^2\abs{\e_{ij}(v)\big\vert_{\Phi_t}}\dif t
+		+2c_wc_1\int_1^2\abs{\e_{jd}(v)\big\vert_{\Phi_t}}\dif t
+		+ 2c_wc_1\int_1^2\abs{\e_{id}(v)\big\vert_{\Phi_t}}\dif t \\
+		&\quad+ 4c_wc_1^2\int_1^2\abs{\e_{dd}(v)\big\vert_{\Phi_t}}\dif t
+		+ c_2\int_1^2\abs{\e_{dd}(v)\big\vert_{\Phi_t}}\dif t \\
+		&\leq c_3\max_{k,l}\int_1^2\abs{\e_{kl}(v)\big\vert_{\Phi_t}}\dif t
+	\end{align*}
+	mit einem $c_3$ nur von $w$ und $f$ abhängig.
+	
+	Nun kümmern wir uns um die restlichen Terme. Sei $x'$ fest. Wir erhalten auf $\tiOmega^\complement$ mit einer Transformation
+	\begin{align*}
+		\int_1^2\abs{\e_{kl}(v)\big\vert_{\Phi_t}}\dif t
+		&= \int_1^2\abs{\e_{kl}(v)(x',x_d+tf(x'))}\dif t \\
+		&= \int_{x_d+f(x_d)}^{x_d+2f(x_d)}\frac{1}{f(x_d)}\abs{\e_{kl}(v)(x',s)}\dif s
+	\end{align*}
+	Zusammen mit
+	\begin{align*}
+		\frac{1}{f(x_d)}&\leq\frac{1}{2(\psi(x')-x_d)} = \frac{1}{2D} \\
+		x_d+f(x_d)&\geq\psi(x')-x_d = D \\
+		x_d+2f(x_d)&\leq c_f(\psi(x')-x_d) = c_fD
+	\end{align*}
+	wobei wir $D\coloneqq\psi(x')-x_d$ gesetzt haben. Damit erhalten wir
+	\begin{align*}
+		\int_1^2\abs{\e_{kl}(v)\big\vert_{\Phi_t}}\dif t
+		&= \int_{x_d+f(x_d)}^{x_d+2f(x_d)}\frac{1}{f(x_d)}\abs{\e_{kl}(v)(x',s)}\dif s \\		
+		&\leq \frac{1}{2D}\int_{D}^{c_fD}\abs{\e_{kl}(v)(x',s)}\dif s \\
+	\end{align*}
+	Es folgt weiter mit Cauchy-Schwarz, dass
+	\begin{align*}
+		\left(\int_1^2\abs{\e_{kl}(v)\big\vert_{\Phi_t}}\dif t\right)^2
+		&= \left(\frac{1}{2D}\int_{D}^{c_fD}\abs{\e_{kl}(v)(x',s)}\dif s\right)^2 \\
+		&= \frac{1}{4D^2}\left(\int_{D}^{c_fD}\abs{s^{1/4}s^{-1/4}\e_{kl}(v)(x',s)}\dif s\right)^2 \\
+		&\leq \frac{1}{4D^2}\int_{D}^{c_fD}s^{1/2}\dif s \int_{D}^{c_fD}s^{-1/2}\abs{\e_{kl}(v)(x',s)}^2\dif s \\
+		&\leq \frac{1}{4D^2}\int_{0}^{c_fD}s^{1/2}\dif s \int_{D}^{c_fD}s^{-1/2}\abs{\e_{kl}(v)(x',s)}^2\dif s \\
+		&= \frac{1}{4D^2}\frac{2}{3}s^{3/2}\Big\vert_{s=0}^{c_fD}\int_{D}^{c_fD}s^{-1/2}\abs{\e_{kl}(v)(x',s)}^2\dif s \\
+		&= \frac{1}{4D^2}\frac{2}{3}c^{3/2}D^{3/2}\int_{D}^{c_fD}s^{-1/2}\abs{\e_{kl}(v)(x',s)}^2\dif s \\
+		&= \frac{c^{3/2}}{6}D^{-1/2}\int_{D}^{c_fD}s^{-1/2}\abs{\e_{kl}(v)(x',s)}^2\dif s
+	\end{align*}
+	Es folgt
+	\begin{align*}
+		&\int_{-\infty}^{\psi(x')}\left(\int_1^2\abs{\e_{kl}(v)\big\vert_{\Phi_s}}\dif t\right)^2\dif x_d \\
+		&\leq c_3\int_{-\infty}^{\psi(x')}D^{-1/2}\int_{D}^{c_fD}s^{-1/2}\abs{\e_{kl}(v)(x',s)}^2\dif s\dif x_d \\
+		&\leq c\int_{\psi(x')}^{\infty}s^{-1/2}\abs{\e_{kl}(v)(x',s)}^2\int_{c^{-1}s}^sD^{-1/2}\dif x_d\dif s \\
+		&\leq c\int_{\psi(x')}^{\infty}s^{-1/2}\abs{\e_{kl}(v)(x',s)}^2\int_{0}^sD^{-1/2}\dif x_d\dif s \\
+		&= c\int_{\psi(x')}^{\infty}s^{-1/2}\abs{\e_{kl}(v)(x',s)}^22x_d^{1/2}\Big\vert_{x_d=0}^s\dif s \\
+		&= 2c\int_{\psi(x')}^{\infty}s^{-1/2}\abs{\e_{kl}(v)(x',s)}^2s^{1/2}\dif s \\
+		&= 2c\int_{\psi(x')}^{\infty}\abs{\e_{kl}(v)(x',s)}^2\dif s
+	\end{align*}
+	und weiter
+	\begin{align*}
+		\int_{\tiOmega^\complement}\left(\int_1^2\abs{\e_{kl}(v)\big\vert_{\Phi_t}}\dif t\right)^2\dif x
+		&= \int_{K}\int_{-\infty}^{\Psi(x')}\left(\int_1^2\abs{\e_{kl}(v)\big\vert_{\Phi_t}}\dif t\right)^2\dif x_d\dif x' \\
+		&\leq c\int_{K}\int_{\psi(x')}^{\infty}\abs{\e_{kl}(v)(x',s)}^2\dif s\dif x' \\
+		&= c\int_{\Omega}\abs{\e_{kl}(v)}^2\dif x \\
+		&= c\abs{\e_{kl}(v)}_{0,\Omega}^2
+	\end{align*}
+	Es ergibt sich also insgesamt
+	\begin{align*}
+		\abs{\e(Ev)}_{0,\R^d}^2-\abs{\e(v)}_{0,\Omega}^2
+		&= \abs{\e(Ev)}_{0,\tiOmega^\complement}^2 \\
+		&= \int_{\tiOmega^\complement}\sum_{i,j}\abs{\e_{ij}(Ev)}^2\dif x \\
+		&\leq  \int_{\tiOmega^\complement}\sum_{i,j}\left(c_3\max_{k,l}\int_1^2\abs{\e_{kl}(v)\big\vert_{\Phi_t}}\dif t\right)^2\dif x \\
+		&=  c_3d^2\max_{k,l}\int_{\tiOmega^\complement}\left(\int_1^2\abs{\e_{kl}(v)\big\vert_{\Phi_t}}\dif t\right)^2\dif x \\
+		&\leq  cc_3d^2\max_{k,l}c\abs{\e_{kl}(v)}_{0,\Omega}^2 \\
+		&\leq  c\abs{\e(v)}_{0,\Omega}^2 \\
+	\end{align*}
+	womit dann die Behauptung folgt.
+\end{proof}
+
+\subsubsection*{Lipschitz-Mengen}
+
+Wir bezeichnen eine beschränkte offene Menge $\Omega\subseteq\R^d$ als Lipschitz, falls es für jeden Randpunkt $x\in\partial\Omega$ einen Radius $r>0$, eine Lipschitz-stetige Funktion $\psi\colon\R^{d-1}\to\R$ und eine affine Isometrie $A\colon\R^d\to\R^d$ gibt, so dass
+\begin{align*}
+	B_r(x)\cap\Omega = B_r(x)\cap A\epi(\psi)
+\end{align*}
+
+\begin{figure}[h]
+\centering
+\hspace*{-3cm}
+\input{Drawings/LipschitzDefinition2.tex}
+\caption{Visualisierung eines Lipschitz-Gebiets}
+\end{figure}
+
+
+\begin{lemma}[Zerlegung der Eins]
+Sei $B_0\coloneqq \tiB_0\coloneqq\Omega\subseteq\R^d$ Lipschitz. Dann gibt es
+\begin{itemize}
+	\item
+	Randpunkte $x^{1},\dots,x^{N}\in\partial\Omega$
+	\item
+	eine Konstante $M>0$
+	\item
+	Bälle $B_i=B_{r_i}(x^{i})$ und $\tiB_i\coloneqq B_{\tir_i}(x^i)$ mit Radius $\tir_i\coloneqq $
+	\item
+	Lipschitz stetige Funktionen $\psi_i\colon \R^{d-1}\to\R$ mit $\Lip(\psi_i)\leq M$ und affine Isometrien $A_i\colon \R^d\to\R^d$
+	\item
+	Abschneidefunktionen $\theta_i\in C_c^\infty(B_i)$ (muss hier $\geq0$ gefordert werden?) und $\theta_0\in C_c^\infty(\Omega)$
+\end{itemize}
+so dass
+\begin{itemize}
+	\item $B_i\cap\Omega = B_i\cap A_i\epi(\psi_i)$
+	\item $\partial\Omega\subseteq\bigcup_i\tiB_i$
+	\item $\supp\theta_i\subseteq \tiB_i$
+	\item $\sum_i\theta_i=1$ auf $\overline{\Omega}$
+\end{itemize}
+\end{lemma}
+\begin{proof}
+	Siehe Theorem 7.4 in \cite{Con-2021}
+	TODO: Das reicht nicht aus
+\end{proof}
+\begin{figure}[h]
+\centering
+\hspace*{-2cm}
+\input{Drawings/PartitionOfUnity2.tex}
+\caption{Visualisierung zur Zerlegung der Eins}
+\end{figure}
+
+\begin{lemma}[Erweiterung von Lipschitz-Mengen]
+	Sei $\Omega\subseteq\R^d$ Lipschitz. Dann existiert eine Erweiterung $E\colon H^1(\Omega;\R^d)\to H^1(\R^d;\R^d)$ mit $Ev\vert_\Omega = v$ und
+	\begin{align*}
+		\abs{\e(Ev)}_{0,\R^d}^2 \leq \frac{c_{K1}}{\sqrt{2}}\left(\abs{\e(v)}_{0,\Omega}^2+\abs{v}_{0,\Omega}^2\right)
+	\end{align*}
+\end{lemma}
+\begin{proof}
+	Seien $x^{i}$, $M$, $B_i$, $\tiB_i$, $r_i$, $\tir_i$, $\theta_i$, $A_i$ und $\psi_i$ wie im Lemma zur Partition der Eins.
+	Es gibt nach Lemma \ref{le:ErweiterungVonEpigraphen} stetige lineare Erweiterungen
+	\begin{align*}
+		E_i\colon H^1_{\partial B_i}(B_i\cap\epi(\psi_i);\R^d)\to H^1(B_i;\R^d)
+	\end{align*}
+	die Gleichung \eqref{eq:ErweiterungEpigraphenUngleichung1} erfüllen.
+	Nun setzen wir $\tiOmega\coloneqq\bigcup_i\tiB_i$ und definieren eine Erweiterung $\tilde{E}\colon H^1(\Omega)\to H^1(\tiOmega)$ für $v\in H^1(\Omega;\R^d)$ durch
+	\begin{align*}
+		\tilde{E}v \coloneqq\sum_iE_i((\theta_iv)\circ A_i)\circ A_i^{-1}
+	\end{align*}
+	wobei $E_0(\theta_0(v\circ A_0^{-1}))$ die Erweiterung von $\theta_0v$ außerhalb von $\Omega$ mit $0$ bezeichnet. Es gilt für $x\in\Omega$
+	\begin{align*}
+		(\tilde{E}v)(x) 
+		&=\sum_iE_i((\theta_iv)\circ A_i)\circ A_i^{-1}(x) \\
+		&= \sum_i(\theta_iv)\circ A_i(A_i^{-1}(x)) \\
+		&= \sum_i\theta_i(x)v(x) \\
+		&= v(x)
+	\end{align*}
+	wegen $A_i^{-1}(x)\in B_i\cap\epi(\psi_i)$ falls $x\in B_i$.
+	Nun folgt
+	\begin{align*}
+		&\abs{\e(\tilde{E}v)}_{0,\tilde{\Omega}}^2 \\
+		&\leq \sum_i\abs{\e(E_iv)}_{0,B_i}^2 \\
+		&\leq c_E\sum_i\abs{\e(\theta_iv)}_{0,B_i\cap\Omega}^2 \\
+		&=c_E\sum_{i,j,k}\abs{\e_{jk}(\theta_iv)}_{0,B_i\cap\Omega}^2 \\
+		&=c_E\sum_{i,j,k}\abs{\theta_i\e_{jk}(v)+\frac{1}{2}v_j\partial_k\theta_i + \frac{1}{2}v_k\partial_j\theta_i}_{0,B_i\cap\Omega}^2 \\
+		&\leq c_E\Big(\sum_{i,j,k}\abs{\theta_i\e_{jk}(v)}_{0,\Omega}^2+\frac{1}{2}\sum_{i,j,k}\abs{v_j}_{0,\Omega}^2\abs{\partial_k\theta_i}_{W^{0,\infty}(\Omega)}^2 \\
+		&\quad+\frac{1}{2}\sum_{i,j,k}\abs{v_k}_{0,\Omega}^2\abs{\partial_j\theta_i}_{W^{0,\infty}(\Omega)}^2\Big) \\
+		&\leq c_E\left(\sum_i\abs{\theta_i}_{W^{0,\infty}(\Omega)}+(N+1)\max_i\abs{\theta_i}_{W^{1,\infty}(\Omega)}^2\right)\left(\abs{\e(v)}_{0,\Omega}^2 + \abs{v}_{0,\Omega}^2\right) \\
+		&=\frac{c_K}{\sqrt{2}}\left(\abs{\e(v)}_{0,\Omega}^2+\abs{v}_{0,\Omega}^2\right)
+	\end{align*}
+\end{proof}
+
+
+\subsubsection*{Eine Charakterisierung von Starrkörperbewegungen}
+
+TODO: auf $d\leq 3$ ausweiten
+
+\subsubsection*{Kornsche Ungleichung mit Randbedingungen}
+
+
+\section{Implementierung}
+
+
+\subsubsection*{Diskretisiertes Problem}
+Das diskrete Problem lautet dann:
+Finde $u_h\in\cS_h$, so dass
+\begin{align*}
+	a(v_h,u_h) &= b(v_h) &&,\text{für alle }v_h\in\cS_h\text{ mit }v_h=0\text{ auf }\Gamma_D \\
+	u_h &= w_h &&,\text{auf }\Gamma_D
+\end{align*}
+
+%Das diskrete Problem lautet dann:
+%Finde $u_h\in\cS_h$, so dass $Mu_h=w_h$ auf $\Gamma_D$ und für alle $v_h\in\cS_h$ mit $Mv_h=0$ auf $\Gamma_D$ gilt
+%\begin{align*}
+%	a(v_h,u_h) = b(v_h)
+%\end{align*}
+Wir schreiben $u_h=\sum_i\hu_i\phi_i$ und $v_h=\sum_j\hv_j\phi_j$ und können die rechte Seite umschreiben zu
+\begin{align*}
+	a(v_h,u_h)
+	= a(\sum_{j}\hv_j\phi_j,\sum_{i}\hu_i\phi_i)
+	= \sum_{i,j}\underbrace{a(\phi_j,\phi_i)}_{\eqqcolon \hA_{ji}}\hu_i\hv_j
+	= \sum_{i,j}\hA_{ji}\hu_i\hv_j
+	= \hv^\top \hA\hu
+\end{align*}
+mit Steifheits-Matrix $\hA_{ij} = a(\phi_j,\phi_i)$.
+und die linke Seite lautet 
+% (mit leichtem überladen des Symbols $b$)
+\begin{align*}
+	b(v_h)
+	= b(\sum_j \hv_j\phi_j)
+	= \sum \underbrace{b(\phi_j)}_{\eqqcolon \hb_j}\hv_j
+	= \hv^\top \hb
+\end{align*}
+mit Load-Vektor $\hb_i=b(\phi_i)$.
+%Damit lautet unser neues Problem: Finde $\hu=(\hu_i)_i\in\R^{nd}$, so dass für alle $\hv=(\hv_i)_i\in\R^{nd}$ gilt
+%\begin{align*}
+%	\hv^\top\hA\hu=\hv^\top\hb
+%\end{align*}
+%Oder: Finde $\hu\in\R^{nd}$, so dass
+%\begin{align*}
+%	\hA\hu = \hb
+%\end{align*}
+Sind $x^{(i_1)},\dots,x^{(i_k)}\in\cK_D$ die Dirichlet-Knoten, so erhalten wir für die Randbedingung
+\begin{align*}
+	 \hu\big\vert_{\cK_D}
+	 \coloneqq \vect{u_{(d-1)i_1+1} \\ \vdots \\ u_{di_k}}
+	 =\vect{w_h(x^{(i_1)}) \\ \vdots \\ w_h(x^{(i_k)})}
+	 = \vect{u_h(x^{(i_1)}) \\ \vdots \\ u_h(x^{(i_k)})}
+	 \eqqcolon \hw\in\R^{kd}
+\end{align*}
+Damit lautet unser neues Problem: Finde $\hu=(\hu_i)_i\in\R^{nd}$, so dass gilt
+\begin{align*}
+	\hv^\top\hA\hu&=\hv^\top\hb &&,\text{für alle }\hv=(\hv_i)_i\in\R^{nd}\text{ mit }\hv \big\vert_{\cK_D}=0 \\
+	\hu\big\vert_{\cK_D} &= \hw
+\end{align*}
+Es genügt, ein $\hu\in\R^{nd}$ zu finden (warum existiert so etwas? dies ist nicht klar), so dass
+\begin{align*}
+	\hA\hu &= \hb \\
+	\hu\big\vert_{\cK_D} &= \hw
+\end{align*}
+Weil wir das Implementiert haben betrachten wir das allgemeinere System
+\begin{align*}
+	\hA\hu &= \hb \\
+	\hu\big\vert_{\cK_D} &= \hw
+\end{align*}
+Wir lösen dies mit Lagrange-Multiplikatoren als System
+\begin{align*}
+	\begin{bmatrix}
+		\hA & B^\top \\
+		B & 0
+	\end{bmatrix}
+	\vect{\hu \\ \lambda}
+	= \vect{\hb \\ \hw}
+\end{align*}
+
+ Wir definieren die Lagrangefunktion $L\colon\R^{nd}\times\R^{ld}\to\R$
+\begin{align*}
+	L(\hv,\lambda)\coloneqq W(\hv)+\lambda^\top(B\hv-\hw)
+	= \hv^\top\hA\hv-\hb^\top\hv+\lambda^\top(B\hv-\hw)
+\end{align*}
+Wir rechnen
+\begin{align*}
+	\nabla L(\hv,\lambda)
+	&= \begin{bmatrix}
+		\nabla_{\hv}L(\hv,\lambda) \\
+		\nabla_{\lambda}L(\hv,\lambda)
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		\hA\hv-\hb+B^\top\lambda \\
+		B\hv-\hw
+	\end{bmatrix} \\
+	&= \begin{bmatrix}
+		\hA\hv+B^\top\lambda \\
+		B\hv
+	\end{bmatrix}
+	-\vect{\hb \\ \hw} \\
+	&= \begin{bmatrix}
+		\hA & B^\top \\
+		B & 0
+	\end{bmatrix}
+	\vect{\hv \\ \lambda}
+	-\vect{\hb \\ \hw}
+\end{align*}
+Nun ist $\nabla L=0$ ist ein notwendiges Kriterium (Satz 2.36 Geiger, Kanzow) dafür, dass ein Minimum des Optimierungsproblems vorliegt. Also besitzt das System
+\begin{align*}
+	\begin{bmatrix}
+		\hA & B^\top \\
+		B & 0
+	\end{bmatrix}
+	\vect{\hv \\ \lambda}
+	=\vect{\hb \\ \hw}
+\end{align*}
+eine Lösung. Weiterhin ist dies aufgrund der Konvexität ein hinreichendes Optimalitätskriterium (Satz 2.46, Geiger, Kanzow) und somit ist die Lösung des Systems eindeutig. Kürzer: Korollar 2.47 Geiger-Kanzow.
+
+Das diskrete Problem lautet dann:
+Finde $u_h\in\cS_h$, so dass $Mu_h=w_h$ auf $\Gamma_D$ und für alle $v_h\in\cS_h$ mit $Mv_h=0$ auf $\Gamma_D$ gilt
+\begin{align*}
+	a(v_h,u_h) = b(v_h)
+\end{align*}
+
+\subsubsection*{Implementierung des Hooke-Tensors}
+
+
+(in Braess:)
+\begin{align*}
+	\vect{\sigma_{11} \\ \sigma_{22} \\ \sigma_{33} \\ \sigma_{12} \\ \sigma_{13} \\ \sigma_{23}}
+	= \frac{E}{(1+\nu)(1-2\nu)}\begin{bmatrix}
+		1-\nu & \nu & \nu & & & \\
+		\nu & 1-\nu & \nu & & & \\
+		\nu & \nu & 1-\nu & & & \\
+		& & & 1-2\nu & & \\
+		& & & & 1-2\nu & \\
+		& & & & & 1-2\nu \\
+	\end{bmatrix}
+	\vect{\e_{11} \\ \e_{22} \\ \e_{33} \\ \e_{12} \\ \e_{13} \\ \e_{23}}
+\end{align*}
+
+\subsubsection*{Berechnung der Steifheitsmatrix}
+TODO: Vereinheitlichung der Bezeichnungen $\varphi_i$ und $\varphi_{x^{(i)}}$
+
+\subsubsection*{Berechnung des Load-Vektors}
+
+
+\subsubsection*{Randbedingungen}
+
+
+
+\section{A posteriori Fehlerschätzer}
+\subsection*{Residuale Schätzer}
+
+Wir folgen im folgenden im wesentlichen \cite{Bra-2007, Nei-2004}
+
+Im folgenden betrachten wir allgemeine lineare elliptische Probleme in einer Dimension
+Wir haben den Operator $\cA$ einer gleichmäßig elliptischen Differenzialgleichung gegeben durch
+\begin{align*}
+	\cA v = \sum_{i,j}\partial_i(A_{ij}\partial_jv) = \diver A\nabla v
+\end{align*}
+mit $A_{ij}=A_{ji}$. So dass
+\begin{align*}
+	\lambda_{min}\abs{\eta}^2\leq A_{ij}\eta_i\eta_j\leq \lambda_{max}\abs{\eta}^2
+\end{align*}
+Wir definieren das Residuum
+\begin{align*}
+	R(v)\coloneqq f+\diver(A\nabla v)
+\end{align*}
+
+
+	für $E\subseteq\Gamma_D$ ist
+	\begin{align*}
+		\int_{E}((\sigma(e)\cdot n_T)\cdot z\dif s
+		&= \int_{E}((\sigma(\underbrace{u-u_h}_{=w-w=0})\cdot z)\cdot z\dif s \\
+		&= \int_{E}0\cdot z)\cdot z\dif s \\
+		&= \int_{E}(R_E\cdot z)\dif s \\
+		&= \inner{R_E,z}_{0,E}
+	\end{align*}
+	für $E\subseteq\Gamma_N$ ist
+	\begin{align*}
+		\inner{\sigma(e)\cdot n_T,z}_{0,E}
+		&= \inner{\sigma(u-u_h)\cdot n,z}_{0,E}\\
+		&= \inner{g-\sigma(u_h)\cdot n,z}_{0,E} \\
+		&= \inner{R_E,z}_{0,E}
+	\end{align*} $E$ kommt als Integrationsgebiet genau zweimal in der Summe vor und es gilt
+	\begin{align*}
+		\inner{\sigma(e)\vert_{T_1}\cdot n_1,z}_{0,E}+\inner{\sigma(e)\vert_{T_2}\cdot n_2}_{0,E}
+		&= 
+	\end{align*}
+	
+	
+	Für den zweiten Term gilt
+	\begin{align*}
+		-\sum_T\int_T(\diver \sigma(e))\cdot z\dif x
+		&= -\sum_T\inner{\diver \sigma(e),z}_{0,T} \\
+		&= -\sum_T\inner{\diver \sigma(u-u_h),z}_{0,T} \\
+		&= -\sum_T\inner{\diver \sigma(u),z}_{0,T} +\sum_T\inner{\diver \sigma(u_h),z}_{0,T} \\
+		&= \sum_T\inner{f,z}_{0,T} +\sum_T\inner{\diver \sigma(u_h),z}_{0,T} \\
+		&= \sum_T\inner{f+\diver \sigma(u_h),z}_{0,T} \\
+		&= \sum_T\inner{R_T,z}_{0,T}
+	\end{align*}
+
+\subsubsection*{Obere Abschätzung des Fehlers}
+
+\subsubsection*{Obere Abschätzung des Schätzers}
+
+ die Umgebung $\omega_T$ vom Dreieck $T$ durch
+\begin{align*}
+	\omega_T\coloneqq\bigcup\{T'\in\cT\vert T\text{ und }T'\text{ haben mindestens eine Kante gemeinsam }\}
+\end{align*}
+
+\begin{theorem}
+	(nach \cite{Bra-2007}
+	Sei $\cT$ eine quasiuniforme Triangluierung mit Regularitätsparameter $\kappa$. Dann gibt es ein von $\Omega$ und $\kappa$ abhängiges $c>0$, so dass für alle $T\in\cT$ gilt die obere Abschätzung
+	\begin{align*}
+		\norm{u-u_h}_{1,\Omega}\leq c\left(\sum_{T\in\cT}\eta_{T,R}^2\right)^{1/2}
+	\end{align*}
+	und die untere Abschätzung
+	\begin{align*}
+		\eta_{T,R}\leq c\left(\norm_{u-u_h}_{1,\omega_T}^2+\sum_{T'\subseteq\omega_T}h_T^2\norm{f-P_hf}_{0,T}^2\right)^{1/2}
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	(Zur oberen Abschätzung)
+	Es gilt für $v\in H_0^1(\Omega)$
+	\begin{align*}
+		\inner{\grad (u-u_h),\grad v}_{0,\Omega}
+		&= 
+	\end{align*}
+\end{proof}
+
+
+\subsection*{lokales Neumann-Problem}
+TODO: ist folgendes legitim (aus Braess): Man definiert $\sigma_h$ an den Knotenpunkten als gewichtetes Mittel von $\partial u_h$ an den angrenzenden Dreiecken und dann durch lineare Interpolation auf den Dreiecken. Dann liefert $\abs{\sigma_h-\partial u_h}$ einen Fehlerschätzer (die Wahl von $\sigma$ als Symbol) ist ein wenig unglücklich
+\subsection*{Hierarchische Schätzer}
+
+\newpage
+
+\begin{thebibliography}{00}
+
+\bibitem{Alb-2002}
+\newblock Alberty, J., C. Carstensen, S. A. Funken, and R. Klose.
+\newblock "Matlab Implementation of the Finite Element Method in Elasticity."
+\newblock {\em Computing 69}, no. 3 (2002): 239-263. 
+
+\bibitem{Ban-2003}
+\newblock Bangerth, Wolfgang, and Rolf Rannacher.
+\newblock {\em Adaptive Finite Element Methods for Differential Equations.}
+\newblock Basel [u.a.]: Birkhäuser, 2003. S.130f.
+
+\bibitem{Bra-2007}
+\newblock Braess, Dietrich.
+\newblock {\em Finite Elemente: Theorie, Schnelle Löser Und Anwendungen in Der Elastizitätstheorie.}
+\newblock 4., überarb. und erw. Aufl.
+\newblock Berlin [u.a.]: Springer, 2007.
+
+\bibitem{Cia-1988}
+\newblock Ciarlet, Philippe G.
+\newblock {\em Studies in Mathematics and Its Applications. Mathematical Elasticity. 1, Three-dimensional Elasticity.}
+\newblock Amsterdam [u.a.]: North-Holland, 1988.
+
+\bibitem{Cia-1997}
+\newblock Ciarlet, Philippe G.
+\newblock {\em Studies in Mathematics and Its Applications. Mathematical Elasticity. 2, Theory of Plates.}
+\newblock Amsterdam [u.a.]: North-Holland, 1997. 
+
+\bibitem{Duv-1976}
+\newblock Lions, Jacques Louis, and Georges Duvaut.
+\newblock {\em Inequalities in Mechanics and Physics.}
+\newblock Berlin, Heidelberg: Springer, 1976. 
+
+\bibitem{Kik-1988}
+\newblock Kikuchi, Noboru, and John Tinsley Oden.
+\newblock {\em Contact Problems in Elasticity: A Study of Variational Inequalities and Finite Element Methods.}
+\newblock Philadelphia: SIAM, 1988. 
+
+\bibitem{Lif-1959}
+\newblock Lifshitz, Evgenii Mikhailovich, and Lev Davidovich Landau.
+\newblock {\em Course of Theoretical Physics.}
+\newblock Pergamon, 1959.
+
+\bibitem{Nei-2004}
+\newblock Neittaanmäki, Pekka, and Sergey R. Repin.
+\newblock {\em Reliable Methods for Computer Simulation: Error Control and Posteriori Estimates}.
+\newblock Oxford: Elsevier Science \& Technology, 2004.
+
+
+\end{thebibliography}
+
+
+\end{document}

@@ -1,0 +1,28 @@
+- Einleitung: auf Gliederung eingehen
+- Seitenzahlen verwenden, aktuelles Kapitel anzeigen
+- Plots einheitlich Färben
+- Skizzen und Text auf eine Seite, 1-2 min pro Folie -> weniger hektisch
+- Funktionanalysis Teil, Lipschitz-Gebiete für Abschlussvortrag kürzen / weglassen
+- nodale Basis und Bild auf eine Folie
+- Zuverlässigkeit - obere Schranke des Fehlers (wir wollen den Fehler abschätzen)
+- Effizienz -> lokale Effizienz (untere Schranke des Fehlers)
+- Konstruktion des Mittellungsschätzers unklar
+- A Priori Fehler 
+  - Notation: nicht h_\cT verwenden, dass verwirrt
+  - quasiuniforme Triangulierung -> uniforme Triangulierung
+  - worum geht es hier eigentlich
+- Quadratisches Gebiet
+  - Formeln stimmen nicht
+  - Anfangsplot stimmt nicht (es muss u_0=0)
+  - nu darf nicht negativ sein
+  - Konvergenzrateplot weglassen und als Gerade in den Plot einbringen
+  - Effizienzplot: eta_R / ||σ-σ_||, nicht andersherum; 
+  - eta_M hat nicht die Eigenschaft, hervorheben
+- L-Förmiges Gebiet:
+  - Funktionen stimmen nicht
+  - Neumann Rand = 0 auf Kanten, die an der Null liegen -> führt zu dem Parameter alpha, der die Singularität maximiert
+  - Ursprung bei der Singularität, wegen Gleitkommadarstellung
+  - Stabilibät der Matrix Plotten für eta_M, darauf hinweisen, dass immer weiter verfeinert wird
+  - verwirrend, dass alpha doppelt verwendet wird
+  - Erste lokale Fehlerschätzer / Fehlerplots weglassen, da mangelnde Aussagekraft
+- Zusammenfassung: Zuverlässigkeit, nicht verlässlichkeit

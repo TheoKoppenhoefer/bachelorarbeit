@@ -1,0 +1,753 @@
+\documentclass{beamer}
+
+\usetheme{default}
+\usecolortheme{default}
+\usefonttheme[onlymath]{serif}
+
+%%%%% PACKAGES
+
+% small tweaks and nicer typography
+\usepackage{microtype}
+
+% changes language to German
+% gives proper date, and correct hyphenation
+\usepackage[ngerman]{babel}
+\uselanguage{German}
+\languagepath{German}
+
+% display quotes correctly
+\usepackage{csquotes}
+
+% basic math stuff
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz}
+
+% allow for any font-size, alternative mathpazo
+\usepackage{mathptmx}
+
+% images
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{subcaption}
+
+
+% tikz
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{babel}
+\tikzset{>=stealth}
+
+\newcommand{\tikzmark}[3][]{\tikz[remember picture,baseline] \node [anchor=base,#1](#2) {$#3$};}
+
+% Tikz librarys
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+%\usetikzlibrary{external}
+%\tikzexternalize[prefix=../Resources/]
+
+
+%%%%% CONFIGURATION
+
+% prevents automatic line breaks inside of equations
+% since it looks bad
+\binoppenalty = \maxdimen
+\relpenalty   = \maxdimen
+
+% theorem-like environments
+\newcounter{everything}
+%\newtheorem{corollary}[everything]{Korollar}
+%\newtheorem{lemma}[everything]{Lemma}
+\newtheorem{proposition}[everything]{Proposition}
+
+
+
+%%%%% CUSTOM COMMANDS
+
+
+% real numbers via \R
+% complex numbers via \C
+% general field via \K
+\def\C{\mathbb{C}}
+\def\R{\mathbb{R}}
+\def\K{\mathbb{K}}
+\def\Q{\mathbb{Q}}
+\def\Z{\mathbb{Z}}
+\def\N{\mathbb{N}}
+\def\H{\mathbb{H}}
+\def\e{\varepsilon}
+\def\ev{e}
+
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\bA}{\mathbb{A}}
+\newcommand{\bB}{\mathbb{B}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bD}{\mathbb{D}}
+\newcommand{\bE}{\mathbb{E}}
+\newcommand{\bF}{\mathbb{F}}
+\newcommand{\bG}{\mathbb{G}}
+\newcommand{\bH}{\mathbb{H}}
+\newcommand{\bI}{\mathbb{I}}
+\newcommand{\bJ}{\mathbb{J}}
+\newcommand{\bK}{\mathbb{K}}
+\newcommand{\bL}{\mathbb{L}}
+\newcommand{\bM}{\mathbb{M}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bO}{\mathbb{O}}
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bS}{\mathbb{S}}
+\newcommand{\bT}{\mathbb{T}}
+\newcommand{\bU}{\mathbb{U}}
+\newcommand{\bV}{\mathbb{V}}
+\newcommand{\bW}{\mathbb{W}}
+\newcommand{\bX}{\mathbb{X}}
+\newcommand{\bY}{\mathbb{Y}}
+\newcommand{\bZ}{\mathbb{Z}}
+
+\newcommand{\hu}{\hat{u}}
+\newcommand{\hv}{\hat{v}}
+\newcommand{\hA}{\hat{A}}
+\newcommand{\hC}{\hat{C}}
+\newcommand{\hR}{\hat{R}}
+\newcommand{\hb}{\hat{b}}
+
+
+\newcommand{\tiS}{\tilde{S}}
+\newcommand{\tiu}{\tilde{u}}
+\newcommand{\tih}{\tilde{h}}
+\newcommand{\tie}{\tilde{\e}}
+\newcommand{\tisigma}{\tilde{\sigma}}
+
+
+%%%%%%%%%%%%%%%%%%% Math operators %%%%%%%%%%%%%
+
+
+\newcommand{\dif}[1]{\,\mathrm{d} #1}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\bnorm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\vii}[2]{\ensuremath{\begin{pmatrix}#1 \\ #2 \end{pmatrix}}}
+\newcommand{\mii}[4]{\ensuremath{\begin{pmatrix}#1&#2 \\ #3&#4 \end{pmatrix}}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+
+
+% Hom(V,W) via \Hom(V,W)
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\diver}{Div}
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Image}{Image}
+\DeclareMathOperator{\Span}{Span}         % linear span
+\DeclareMathOperator{\Vspan}{Span}
+\DeclareMathOperator{\Erf}{erf}
+
+% inner product (scalar product) via \inner{v, w}
+% norm via \norm{x}
+% absolute value via \abs{x}
+% use the star-version for automatic scaling
+\DeclarePairedDelimiter{\abs}{|}{|}
+\DeclarePairedDelimiter{\inner}{\langle}{\rangle}
+
+% \vect{ x // y // z } for a column vector with entries x, y, z
+% similarly for larger vectors
+% in this code:  1 = number of arguments
+%               #1 = first argument
+\newcommand{\vect}[1]{\begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\conj}{\overline}
+
+
+% \conj{z} for complex conjugation
+% \newcommand{\conj}{\overline}
+
+%%%%% allow for proofs over multiple slides
+
+\makeatletter
+\newenvironment<>{proofs}[1][\proofname]{%
+    \par
+    \def\insertproofname{#1\@addpunct{.}}%
+    \usebeamertemplate{proof begin}#2}
+  {\usebeamertemplate{proof end}}
+\makeatother
+
+
+%%%%% TITLE PAGE
+
+\subject{Adaptive Finite Elemente für Lineare Elastizität}
+\title{Adaptive Finite Elemente für Lineare Elastizität}
+%\subtitle{Blatt 0}
+\author{Theo Koppenhöfer}
+\date{7. April 2022}
+
+
+
+
+\begin{document}
+
+\frame[plain]
+
+
+
+\section{Einleitung}
+
+% Frame 1
+\frame[plain]{\titlepage}
+
+\begin{frame}
+	\begin{center}
+		\Large{{Es wird spannend...}}
+	\end{center}
+\end{frame}
+
+% Frame 3
+\frame{ \frametitle{Outline} \tableofcontents }
+
+\subsection*{Verzerrung, Spannung}
+\subsubsection*{Geometrische Betrachtungen}
+\begin{frame}[allowframebreaks]
+	Wir nehmen an, der Körper nimmt in Referenzkonfiguration (Lagrange-Koordinaten) das Gebiet $\overline{\Omega}\subseteq\R^d$ ein. Wir definieren
+	\begin{itemize}
+		\item Deformation: Eine Abbildung $\chi\colon\overline{\Omega}\to\R^d$ mit $\det\chi>0$
+		\item Verschiebung: Eine Abbildung $u$, gegeben durch $\chi=\Id+u$
+	\end{itemize}
+	Die Menge an zulässigen Verschiebungen bezeichnen wir mit $V$ (wir verwenden für eine generische Verschiebung den Buchstaben $v$).
+	
+	\framebreak
+	\begin{figure}[h]
+	\centering
+	\input{../Resources/Deformation1.tex}
+	\caption{Eine Deformation in 2D}
+	\end{figure}
+	\framebreak
+	
+	
+	Man berechnet für die Länge eines kleines deformierten Wegstückes bei $x$
+	\begin{align*}
+		&\norm{\chi(x+z)-\chi(x)}^2+o(\norm{z}^2) \\
+		&= \norm{\nabla\chi(x)z}^2 \\
+		&= \norm{\nabla(\Id+u(x))z}^2 \\
+		&= \norm{z+\nabla u(x)z}^2 \\
+		&= \norm{z}^2 + z^\top(\nabla u(x)+\nabla u(x)^\top)z+z^\top\nabla u(x)^\top\nabla u(x) z \\
+		&= \norm{z}^2 + 2z^\top E z 
+	\end{align*}
+	mit Euler-Lagrange Verrzerrungstensor $E$ gegeben durch
+	\begin{align*}
+		2E\coloneqq \nabla u(x)+\nabla u(x)^\top+\nabla u(x)^\top\nabla u(x)
+	\end{align*}
+	\framebreak
+	\begin{figure}[h]
+	\centering
+	\input{../Resources/StrainTensor1.tex}
+	\caption{Eine Anschauliche Darstellung}
+	\end{figure}
+	
+	\framebreak
+	Für kleine Verzerrungen, wie wir sie im Folgenden annehmen, ist der letzte Term vernachlässigbar und wir haben
+	\begin{align*}
+		E\approx \frac{1}{2}\left(\nabla u+\nabla u^\top\right)\eqqcolon\e
+	\end{align*}
+	mit $\e$ dem linearisierten Verzerrungstensor.
+\end{frame}
+
+\subsubsection*{Kräfte, Cauchy-Tensor}
+\begin{frame}
+	Vorraussetzung des Models: Der statische deformierte Körper (Euler-Koordinaten) nimmt den Raum $\Omega$ ein und befindet sich im Kräftegleichgewicht. Wir definieren
+	\begin{itemize}
+	\item Volumenkräfte: Eine Abbildung $f\colon\Omega\to\R^d$
+	\item Oberflächenkräfte: Eine Abbildung $\sigma\colon\Omega\to\R^{d\times d}$ (Cauchyscher Spannungstensor). $\sigma_{ij}$ bezeichnet die Kraft auf die Fläche j in Richtung i wirkt. Kraft, die auf Oberfläche in Richtung $n$ wirkt ist
+	\begin{align*}
+		\sigma n =\sum_j\sigma_{ij}n_je_i
+	\end{align*}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\begin{figure}[h]
+	\centering
+	\input{../Resources/StressTensor1.tex}
+	\caption{Eine mögliche Visualisierung des Spannungstensors in 3D}
+	\end{figure}
+\end{frame}
+
+\subsubsection*{Integralformulierung}
+\begin{frame}
+	\frametitle{Erste Formulierung des Problems}
+	Wir bezeichnen $\Gamma\coloneqq \partial\Omega$ als den Rand des Gebietes mit $\Gamma_D\subseteq\Gamma$ als den Dirichlet- und $\Gamma_N\coloneqq\Gamma\setminus\Gamma_D$ als den Neumann-Rand. Die Gleichgewichtsbeziehung liefert die Formulierung: Finde eine Deformation $u$, so dass
+	\vspace{1.5cm}
+	\begin{align*}
+		\int_\omega \tikzmark{forcevol}{f}\dif x+\int_{\partial\omega}\tikzmark{forcesurf}{\sigma n}\dif s&=0 &,\text{für alle }\omega\subseteq\Omega \\
+		u &= w &,\text{auf }\Gamma_D \\
+		\sigma n&= g &,\text{auf }\Gamma_N
+	\end{align*}
+	\begin{tikzpicture}[remember picture, overlay, node distance = 1cm]
+		\node[,text width=3cm] (forcevoldescr) [above left=0.5cm and -2cm of forcevol ]{Volumenkräfte, die auf $\omega$ wirken};
+		\draw[,->,thick] (forcevoldescr) to [in=90,out=-90] (forcevol);
+		\node[,text width=6cm] (forcesurfdescr) [above right=0.8cm and -0.5cm of forcesurf ]{Oberflächenkräfte, die über die Oberfläche $\partial\omega$ auf $\omega$ wirken};
+		\draw[,->,thick] (forcesurfdescr) to [in=90,out=-90] (forcesurf);
+	\end{tikzpicture}
+	wobei $\sigma$ von $u$ abhängt und $f,g$ als von $u$ unabhängig angenommen werden (tote Lasten). 
+\end{frame}
+
+\begin{frame}
+	\begin{figure}[h]
+	\centering
+	\input{../Resources/BoundaryConditions1.tex}
+	\caption{Beispiel für mögliche Nebenbedingungen}
+	\end{figure}
+\end{frame}
+
+\subsubsection*{Differenzielle Formulierung}
+%\begin{frame}
+%	Satz von Gauss liefert für $\omega\subseteq\Omega$
+%	\begin{align*}
+%		0 &= \int_\omega f\dif x + \int_{\partial\omega}\sigma\cdot n\dif s \\
+%		&= \int_{\omega}f\dif x+\int_{\partial\omega}\sum_j\sigma_{ij}n_je_i\dif s \\
+%		&= \int_{\omega}f+\sum_j\partial_j\sigma_{ij}e_i\dif x
+%	\end{align*}
+%	
+%	mit $n\colon\Omega\to\R^d$ die Flächennormale.
+%	Wir erhalten die Gleichgewichtsbeziehung in differenzieller Form
+%	\begin{align*}
+%		-\diver \sigma \coloneqq -\sum_j\partial_j\sigma_{ij}e_i =f
+%	\end{align*}
+%\end{frame}
+
+\begin{frame}
+	Der Satz von Gauss liefert die Gleichgewichtsbeziehung in differenzieller Form
+	\begin{align*}
+		-\diver \sigma \coloneqq -\sum_j\partial_j\sigma_{ij}e_i =f
+	\end{align*}
+	Jetzt haben wir die Formulierung
+	\begin{align*}
+		\qquad\qquad-\diver\sigma &= f &&,\text{auf }\Omega\qquad\qquad\\
+		u &= w &&,\text{auf }\Gamma_D \\
+		\sigma n &= g &&,\text{auf }\Gamma_N
+	\end{align*}
+	Die Impulserhaltung liefert
+	\begin{align*}
+		\sigma_{ij}=\sigma_{ji}
+	\end{align*}
+\end{frame}
+
+\subsection*{Materialgesetze}
+\subsubsection*{Hooke-Tensor}
+\begin{frame}
+	\frametitle{Materialgesetze}
+	Für ein linear-elastisches Material ist
+	\begin{align*}
+		\sigma_{ij}=\sum_{k,l}C_{ijkl}\e_{kl}
+	\end{align*}
+	mit Hooke-Tensor $C\colon\Omega\to\otimes_{i=1}^4\R^d$
+\end{frame}
+
+\subsubsection*{St. Venant-Kirchhoff Material}
+\begin{frame}
+	Für St. Venant-Kirchhoff-Materialen gilt
+	\begin{align*}
+		C_{ijkl}=\lambda\delta_{ij}\delta_{kl}+\mu(\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk})
+	\end{align*}
+	mit Lamé-Koeffizienten $\lambda$ und $\mu$ (Schubmodul). Es folgt
+	\begin{align*}
+		\sigma_{ij}=\sum_{k,l}C_{ijkl}\e_{kl}=\lambda\Tr(\e)\delta_{ij}+2\mu\e_{ij}
+	\end{align*}
+	Basierend auf $\lambda$, $\mu$ kann man weitere Materialparameter $K$ (Kompressionsmodul), $E$ (Elastizitätsmodul) und $\nu$ (Querkontraktion) definieren.
+\end{frame}
+
+\begin{frame}
+	Für St. Venant-Kirchhoff-Materialien ergibt sich die Lamé-Differenzialgleichung
+	\begin{align*}
+		-\lambda\nabla\diver u-2\mu\diver\e(u)&=f &&,\text{auf }\Omega\qquad \\
+		u &= w &&,\text{auf }\Gamma_D \\
+		\sigma n &= g &&,\text{auf }\Gamma_N
+	\end{align*}
+\end{frame}
+
+
+\subsection*{Variationsmethode, Energiebetrachtungen}
+\begin{frame}
+	\frametitle{Variationsmethode, Energiebetrachtungen}
+	Wir definieren
+	\begin{align*}
+		a(u,v) \coloneqq\int_\Omega\sigma(u):\e(v)\dif x \coloneqq\int_\Omega \sum_{i,j}\sigma_{ij}(u)\e_{ij}(v)\dif x
+	\end{align*}
+	sowie
+	\begin{align*}
+		b(v)\coloneqq \int_\Omega f\cdot v\dif x+\int_{\Gamma_N} g\cdot v\dif x
+	\end{align*}
+	Dann lautet die potenzielle Energie
+	\begin{align*}
+		W(v)\coloneqq \frac{1}{2}a(v,v)-b(v)
+	\end{align*}
+\end{frame}
+
+\begin{frame}
+	Daraus erhält man eine neue Formulierung des Problems
+	Finde $u\in V$, so dass
+	\begin{align*}
+		a(u,v) &= b(v) &&,\text{für alle }v\in V\text{ mit }v=0\text{ auf }\Gamma_D\qquad \\
+		u &= w &&,\text{auf }\Gamma_D
+	\end{align*}
+\end{frame}
+
+\section{Existenz und Eindeutigkeit von Lösungen}
+\subsection*{Lax-Milgram-Lemma}
+\begin{frame}
+	\frametitle{Existenz und Eindeutigkeit von Lösungen}
+	Unter welchen Vorraussetzungen ist $a$ eine stetige symmetrische bilineare Form? D.h.
+	\begin{enumerate}
+		\item $a$ ist bilinear und symmetrisch
+		\item (Stetigkeit) es gibt ein $\alpha_1>0$, so dass für alle $v_1,v_2\in V$
+		\begin{align*}
+			a(v_1,v_2)\leq \alpha_1\norm{v_1}\norm{v_2}
+		\end{align*}
+		\item (Elliptizität) es gibt ein $\alpha_2>0$, so dass für alle $v\in V$
+		\begin{align*}
+			a(v,v)\geq\alpha_2\norm{v}^2
+		\end{align*}
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\begin{theorem}[Lax-Milgram Lemma, nach \cite{Cia-1997}]
+		Sei $V$ ein Banach-Raum. Sei $b\in V^*$ und $a\colon V\times V\to\R$ eine stetige symmetrische elliptische bilineare Form ist.
+		
+		Dann hat das Problem $u\in V$ zu finden, so dass
+		\begin{align*}
+			a(u,v)=b(v)
+		\end{align*}
+		für alle $v\in V$ eine eindeutige Lösung. Dieses ist dann auch eindeutige Lösung des Problems $u\in V$ zu finden, so dass $u$ das Funktional
+		\begin{align*}
+			W(v)=\frac{1}{2}a(v,v)-b(v)
+		\end{align*}
+		minimiert.
+	\end{theorem}
+\end{frame}
+
+\subsection*{Definitionen}
+\begin{frame}[allowframebreaks]
+	\frametitle{Ein paar Definitionen}
+	$L^2(\Omega)$ bezeichnet die Menge aller Funktionen, deren Quadrat Lebesgue-integrierbar ist.
+	Wir definieren $H^k(\Omega)$ für $k\in\N$ als die Menge aller $v\in L^2(\Omega)$, so dass für alle Multiindizes $\alpha$ mit $\abs{\alpha}\leq k$ die schwache Ableiung $\partial^\alpha v\in L^2(\Omega)$.
+	Es wird durch
+	\begin{align*}
+		\inner{u,v}_{0,\Omega} = \int_\Omega uv\dif x
+	\end{align*}
+	Ein Skalarprodukt auf $L^2(\Omega)$ definiert. Durch
+	\begin{align*}
+		\inner{u,v}_{k,\Omega} = \sum_{\abs{\alpha}\leq k}\inner{\partial^\alpha u,\partial^\alpha v}_{0,\Omega}
+	\end{align*}
+	wird ein Scalarprodukt auf $H^k(\Omega)$ definiert. Dieses induziert die Norm $\norm{\cdot}_{k,\Omega}$ , wodurch $H^k(\Omega)$ zu einem Banachraum wird.
+	
+	\framebreak
+	Wir definieren durch
+	\begin{align*}
+		\norm{v}_{-k,\Omega}\coloneqq\sup_{v\in H^k_0(\Omega)}\frac{\inner{u,v}_{0,\Omega}}{\norm{v}_{k,\Omega}}
+	\end{align*}
+	eine Norm auf $L^2(\Omega)$. Die Vervollständigung von $L^2(\Omega)$ bezeichnen wir mit $H^{-k}(\Omega)$. Dies ist eine Charakterisierung des Dualraums von $H^k(\Omega)$.
+\end{frame}
+
+\subsubsection*{Lemma von J.L. Lions}
+\begin{frame}
+	\begin{lemma}[Lemma von J.L. Lions, nach \cite{Duv-1976}]
+	Sei $\Omega\subseteq\R^d$ ein Gebiet mit regulärem Rand und $v\colon\Omega\to\R$, so dass $v\in H^{-1}(\Omega)$ und $\partial_iv\in H^{-1}(\Omega)$ für alle $i$, dann folgt $v\in L^2(\Omega)$.
+	\end{lemma}
+\end{frame}
+
+\subsection*{Kornsche Ungleichung ohne Randbedingungen}
+\begin{frame}
+	\begin{lemma}[Kornsche Ungleichung ohne Randbedingungen]
+	(Kornsche Ungleichung ohne Randbedingungen, in \cite{Cia-1997} bewiesen nur für $d=3$)
+	Sei $\Omega\subseteq\R^d$ ein Gebiet mit $C^1$ Rand (Lipschitz reicht wohl auch) und beschränkt, dann gibt es ein $c>0$, so dass für alle $v\in H^1(\Omega;\R^d)$ gilt
+	\begin{align*}
+		\norm{v}_{1,\Omega}\leq c\left(\abs{v}_{0,\Omega}^2+\abs{\e(v)}_{0,\Omega}^2\right)^{1/2}\eqqcolon c\norm{v}_K
+	\end{align*}
+	\end{lemma}
+\end{frame}
+
+\subsection*{Kornsche Ungleichung mit Randbedingungen}
+\begin{frame}
+	\begin{lemma}[Eine Charakterisierung von Starrkörperbewegungen]
+		Sei $\Omega\subseteq\R^3$ offen und zusammenhängend, dann sind für $v\in H^1(\Omega;\R^3)$ äquivalent
+		\begin{enumerate}
+			\item $\e(v) = 0$
+			\item Es gibt $a,b\in\R^3$, so dass $v(x)=a\times x+b$
+		\end{enumerate}
+	\end{lemma}
+\end{frame}
+
+\begin{frame}
+	\begin{theorem}[Kornsche Ungleichung mit Randbedingungen]
+		Sei $\Omega\subseteq\R^3$ mit $C^1$ Rand und beschränkt. Sei $\Gamma_D\subseteq\partial\Omega$ mit positivem Flächenmaß. Dann gibt es $c>0$, so dass für alle $v\in H^1(\Omega;\R^3)$ mit $v=0$ auf $\Gamma_D$
+		\begin{align*}
+			\norm{v}_{1,\Omega}\leq c\abs{\e(v)}_{0,\Omega}
+		\end{align*}
+	\end{theorem}
+\end{frame}
+
+
+\section{Das diskrete Problem}
+\subsection*{Nodale Basis}
+\begin{frame}
+	\frametitle{Das diskrete Problem}
+	Es sei $\cT_h$ eine reguläre Triangulierung von $\Omega$. Bezeichne $\varphi_i$ die nodale Basis in einer Dimension. Wir definieren die $d$-dimensionale nodale Basis
+	\begin{align*}
+		\vect{\phi_1\cdots\phi_{dn}}=\left(\varphi_1\ev_1\cdots\varphi_1\ev_d\quad\cdots\quad\varphi_n\ev_1\cdots\varphi_n\ev_d\right)
+	\end{align*}
+	Weiter setzen wir $\cS_h\coloneqq\Span\{\phi_i\}_i$.
+\end{frame}
+
+\begin{frame}
+	\begin{figure}[h]
+	\centering
+	\input{../Resources/NodalBasis1.tex}
+	\caption{Ein Element einer nodalen Basis in 2D}
+	\end{figure}
+\end{frame}
+
+\subsection*{Diskretisiertes Problem}
+\begin{frame}
+	Das diskrete Problem lautet dann:
+Finde $u_h\in\cS_h$, so dass
+	\begin{align*}
+		a(v_h,u_h) &= b(v_h) &&,\text{für alle }v_h\in\cS_h\text{ mit }v_h=0\text{ auf }\Gamma_D \\
+		u_h &= w_h &&,\text{auf }\Gamma_D
+	\end{align*}
+\end{frame}
+
+%\begin{frame}
+%	Wir schreiben $u_h=\sum_i\hu_i\phi_i$ und $v_h=\sum_j\hv_j\phi_j$ und es folgt
+%	\begin{align*}
+%		a(v_h,u_h)
+%		= a(\sum_{j}\hv_j\phi_j,\sum_{i}\hu_i\phi_i)
+%		= \sum_{i,j}\underbrace{a(\phi_j,\phi_i)}_{\eqqcolon \hA_{ji}}\hu_i\hv_j
+%		= \sum_{i,j}\hA_{ji}\hu_i\hv_j
+%		= \hv^\top \hA\hu
+%	\end{align*}
+%	sowie
+%	\begin{align*}
+%		b(v_h)
+%		= b(\sum_j \hv_j\phi_j)
+%		= \sum \underbrace{b(\phi_j)}_{\eqqcolon \hb_j}\hv_j
+%		= \hv^\top \hb
+%	\end{align*}
+%\end{frame}
+%
+%\begin{frame}
+%	Damit lautet unser neues Problem: Finde $\hu=(\hu_i)_i\in\R^{nd}$, so dass für alle $\hv=(\hv_i)_i\in\R^{nd}$ gilt
+%	\begin{align*}
+%		\hv^\top\hA\hu=\hv^\top\hb
+%	\end{align*}
+%	Oder: Finde $\hu\in\R^{nd}$, so dass
+%	\begin{align*}
+%		\hA\hu = \hb
+%	\end{align*}
+%	mit Steifheits-Matrix $\hA_{ij} = a(\phi_j,\phi_i)$.
+%\end{frame}
+
+\begin{frame}
+	Indem man $u_h=\sum_i\hu_i\phi_i$ setzt gelangt man zu einer neuen Formulierung des diskreten Problems: Finde $\hu\in\R^{nd}$, so dass
+	\begin{align*}
+		\hA\hu = \hb
+	\end{align*}
+	mit Steifheits-Matrix $\hA_{ij} = a(\phi_j,\phi_i)$ und Load-Vektor $\hb_i = b(\phi_i)$.
+\end{frame}
+
+%\subsection*{Implementierung des Hooke Tensors}
+%\begin{frame}[allowframebreaks]
+%	\frametitle{Implementierung des Hooke Tensors}
+%	
+%	Wir wenden die Voigt representation für $d=2$
+%	\begin{align*}
+%		\gamma(\e) = \vect{\e_{11} \\ \e_{22} \\ 2\e_{12}}
+%	\end{align*}
+%	beziehungsweise für $d=3$ an
+%	\begin{align*}
+%		\gamma(\e) = \vect{\e_{11} \\ \e_{22} \\ \e_{22} \\ 2\e_{12} \\ 2\e_{13} \\ 2\e_{23}}
+%	\end{align*}
+%	
+%	\framebreak
+%	Damit lässt sich die Relation 
+%	\begin{align*}
+%		\sigma_{ij}=\sum_{k,l}C_{ijkl}\e_{kl}=\lambda\Tr(\e)\delta_{ij}+2\mu\e_{ij}
+%	\end{align*}
+%	schreiben als
+%	\begin{align*}
+%		\vect{\sigma_{11} \\ \sigma_{22} \\ \sigma_{33} \\ \sigma_{12} \\ \sigma_{13} \\ \sigma_{23}}
+%		= \underbrace{\begin{pmatrix}
+%			\lambda+2\mu & \lambda & \lambda & & & \\
+%			\lambda & \lambda+2\mu & \lambda & & & \\
+%			\lambda & \lambda & \lambda+2\mu & & & \\
+%			& & & \mu & & \\
+%			& & & & \mu & \\
+%			& & & & & \mu \\
+%		\end{pmatrix}}_{\eqqcolon \hC}
+%		\vect{\e_{11} \\ \e_{22} \\ \e_{33} \\ 2\e_{12} \\ 2\e_{13} \\ 2\e_{23}}
+%	\end{align*}
+%	also $\gamma(\sigma) = \hC\gamma(\e)$
+%\end{frame}
+
+\section{A Posteriori Fehlerschätzer}
+\begin{frame}
+	\frametitle{Residuale Fehlerschätzer}
+	Gegeben sei die Lösung $u$ des Problems und $u_h$ des diskretisierten Problems. Wir definieren
+	\begin{itemize}
+		\item die flächenbezogenen Residuen $R_T\coloneqq f+\diver\sigma(u_h)$
+		\item die kantenbezogenen Sprünge
+		\begin{align*}
+			R_E = \begin{cases}
+				\left[\![\sigma(u_h)\cdot n\right]\!] &,\text{falls }E\subseteq\bigcup_T\partial T\setminus\partial\Omega \\
+				0 &,\text{falls }E\subseteq\Gamma_D \\
+				g-\sigma(u_h) &,\text{falls }E\subseteq\Gamma_N
+			\end{cases}
+		\end{align*}
+%		mit
+%		\begin{align*}
+%		\left[\![\sigma(u_h)\cdot n\right]\!]
+%		&\coloneqq\sigma(u_h)\cdot n_{T_1}\big\Vert_{\partial T_1}+\sigma(u_h)\cdot n_{T_2} \big\Vert_{\partial T_2}\\
+%		&= \sigma(u_h)n_{T_1}\big\Vert_{\partial T_1}-\sigma(u_h)n_{T_1}\big\Vert_{\partial T_2}\cdot 
+%		\end{align*}
+%		wobei $\cdot\Vert_{\partial T}\colon H^1(T;\R^d)\to L^2(\partial T;\R^d)$ den Trace operator bezeichnet.
+		\item einen lokalen Fehlerschätzer
+		\begin{align*}
+			\eta_{R,T}\coloneqq\Big(h_T^2\norm{R_T}_{0,T}^2+\frac{1}{2}\sum_{E\in\partial T}h_E\norm{R_E}_{0,E}^2\Big)^{1/2}
+		\end{align*}
+		\item einen globalen Fehlerschätzer
+		\begin{align*}
+			\eta_{R}\coloneqq\Big(\sum_{T\in\cT_h}h_T^2\norm{R_T}_{0,T}^2+\sum_{E\in\cE_h}h_E\norm{R_E}_{0,E}^2\Big)^{1/2}
+		\end{align*}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\begin{theorem}[untere Schranke des residualen Schätzers, nach \cite{Bra-2007,Ban-2003}]
+		Sei $\cT_h$ eine quasiuniforme Triangulierung von $\Omega$. Dann gibt es ein $c>0$, so dass für den Fehler $e\coloneqq u-u_h$ gilt
+		\begin{align*}
+			\norm{e}_{1,\Omega}\leq c\eta_R
+		\end{align*}
+	\end{theorem}
+\end{frame}
+
+\begin{frame}
+	\begin{theorem}[obere Schranke des residualen Schätzers, nach \cite{Bra-2007,Ban-2003}]
+		Sei $\cT_h$ eine quasiuniforme Triangulierung von $\Omega$. Dann gibt es ein $c>0$, so dass
+		\begin{align*}
+			\eta_{R,T}\leq c\Big(\norm{e}_{1,\omega_T}^2+\sum_{T'\subseteq\omega_T}h_{T'}^2\norm{f-P_hf}_{0,T'}^2\Big)^{1/2}
+		\end{align*}
+	\end{theorem}
+\end{frame}
+
+\subsection*{Fehlerschätzer durch Mittelung}
+\begin{frame}
+	\frametitle{Fehlerschätzung durch Mittelung, nach \cite{Alb-2002}}
+	Wir setzen im Folgenden $\tisigma_h=\sigma(\tie_h)$ und $\sigma_h=\sigma(\e_h)$.
+	Man definiert eine stetige Approximation $\tisigma_h$ an $\sigma_h$, indem man an den Knoten den Wert von $\tilde{\sigma}_h$ auf das Mittel von $\sigma_h$ der angrenzenden $T\in\cT_h$ setzt und dieses dann linear interpoliert. Dies liefert dann die Fehlerschätzer
+	\begin{align*}
+		\eta_{M1,T}\coloneqq\norm{\tisigma_h-\sigma_h}_{0,T}
+	\end{align*}
+	oder alternativ
+	\begin{align*}
+		\eta_{M2,T}\coloneqq\int_T(\tisigma_h-\sigma_h):(\tie_h-\e_h)\dif x
+	\end{align*}
+%	
+%	Anschauliche Bedeutung in 1d
+\end{frame}
+
+\begin{frame}
+	\begin{center}
+		\Large{{Danke für die Aufmerksamkeit.}}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+	\begin{center}
+		\Large{{Fragen?}}
+	\end{center}
+\end{frame}
+
+
+\section{Quellen}
+\begin{frame}[allowframebreaks]
+	\frametitle{Quellen}
+	\begin{thebibliography}{0000}
+		
+		\bibitem{Alb-2002}
+		 Alberty, J., C. Carstensen, S. A. Funken, and R. Klose.
+		 "Matlab Implementation of the Finite Element Method in Elasticity."
+		 {\em Computing 69}, no. 3 (2002): 239-263. 
+		
+		\bibitem{Ban-2003}
+		 Bangerth, Wolfgang, and Rolf Rannacher.
+		 {\em Adaptive Finite Element Methods for Differential Equations.}
+		 Basel [u.a.]: Birkhäuser, 2003. S.130f.
+		
+		\bibitem{Bra-2007}
+		 Braess, Dietrich.
+		 {\em Finite Elemente: Theorie, Schnelle Löser Und Anwendungen in Der Elastizitätstheorie.}
+		 4., überarb. und erw. Aufl.
+		 Berlin [u.a.]: Springer, 2007.
+		
+		\bibitem{Cia-1988}
+		 Ciarlet, Philippe G.
+		 {\em Studies in Mathematics and Its Applications. Mathematical Elasticity. 1, Three-dimensional Elasticity.}
+		 Amsterdam [u.a.]: North-Holland, 1988.
+		
+		\bibitem{Cia-1997}
+		 Ciarlet, Philippe G.
+		 {\em Studies in Mathematics and Its Applications. Mathematical Elasticity. 2, Theory of Plates.}
+		 Amsterdam [u.a.]: North-Holland, 1997. 
+		
+		\bibitem{Duv-1976}
+		 Lions, Jacques Louis, and Georges Duvaut.
+		 {\em Inequalities in Mechanics and Physics.}
+		 Berlin, Heidelberg: Springer, 1976. 
+		
+		\bibitem{Kik-1988}
+		 Kikuchi, Noboru, and John Tinsley Oden.
+		 {\em Contact Problems in Elasticity: A Study of Variational Inequalities and Finite Element Methods.}
+		 Philadelphia: SIAM, 1988. 
+		
+		\bibitem{Lif-1959}
+		 Lifshitz, Evgenii Mikhailovich, and Lev Davidovich Landau.
+		 {\em Course of Theoretical Physics.}
+		 Pergamon, 1959.
+		
+		\bibitem{Nei-2004}
+		 Neittaanmäki, Pekka, and Sergey R. Repin.
+		 {\em Reliable Methods for Computer Simulation: Error Control and Posteriori Estimates}.
+		 Oxford: Elsevier Science \& Technology, 2004.
+
+	\end{thebibliography}
+\end{frame}
+
+\frame[plain]
+
+\end{document}
